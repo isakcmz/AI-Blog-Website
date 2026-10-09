@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="ViewComponents\DefaultComponents\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
