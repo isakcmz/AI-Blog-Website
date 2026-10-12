@@ -7,6 +7,6 @@
         public string CoverImageUrl { get; set; }
         public string MainImageUrl { get; set; }
         public string Content { get; set; }
-        public string CreatedData { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

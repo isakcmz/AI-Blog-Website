@@ -59,9 +59,8 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreatedData")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("MainImageUrl")
                         .IsRequired()
@@ -167,7 +166,7 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TradingVideoId"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedData")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmbedVideoUrl")
