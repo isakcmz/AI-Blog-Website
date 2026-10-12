@@ -35,7 +35,7 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             article.CreatedDate = DateTime.Now;
             _context.Articles.Add(article);
             _context.SaveChanges();
-            return Ok("Ekleme işlemi başarılı. Eklenen: " + article);
+            return Ok("Ekleme işlemi başarılı.");
         }
 
 

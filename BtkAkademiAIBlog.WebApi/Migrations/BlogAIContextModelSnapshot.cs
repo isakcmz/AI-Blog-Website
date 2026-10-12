@@ -51,6 +51,9 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticleId"), 1L, 1);
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -71,6 +74,8 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ArticleId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Articles");
                 });
@@ -184,6 +189,20 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.HasKey("TradingVideoId");
 
                     b.ToTable("TradingVideos");
+                });
+
+            modelBuilder.Entity("BtkAkademiAIBlog.WebApi.Entities.Article", b =>
+                {
+                    b.HasOne("BtkAkademiAIBlog.WebApi.Entities.Category", "Category")
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("BtkAkademiAIBlog.WebApi.Entities.Category", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }
