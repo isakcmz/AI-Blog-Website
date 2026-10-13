@@ -75,5 +75,15 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok("Güncelleme işlemi başarılı");
         }
 
+
+
+
+        [HttpGet("GetArticlesFeatureSliderByTrue")]
+        public IActionResult GetArticlesFeatureSliderByTrue()
+        {
+            var values = _context.Articles.Where(y => y.IsFeatureSlider == true).Include(x => x.Category).ToList();
+            return Ok(_mapper.Map<List<ResultArticleWithCategoryDto>>(values));
+        }
+
     }
 }
