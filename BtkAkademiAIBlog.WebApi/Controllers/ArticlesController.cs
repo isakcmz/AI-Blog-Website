@@ -85,5 +85,67 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(_mapper.Map<List<ResultArticleWithCategoryDto>>(values));
         }
 
+
+
+
+
+
+
+
+        [HttpGet("GetLastTechnologyArticle")]
+        public IActionResult GetLastTechnologyArticle()
+        {
+            var categoryId = _context.Categories
+                .Where(x => x.CategoryName == "Teknoloji")
+                .Select(y => y.CategoryId)
+                .FirstOrDefault();
+
+            var values = _context.Articles
+                .Where(x => x.CategoryId == categoryId)
+                .OrderByDescending(y => y.ArticleId)
+                .Take(1)
+                .FirstOrDefault();
+
+            return Ok(values);
+        }
+
+
+
+        [HttpGet("GetLastSportArticle")]
+        public IActionResult GetLastSportArticle()
+        {
+            var categoryId = _context.Categories
+                .Where(x => x.CategoryName == "Spor")
+                .Select(y => y.CategoryId)
+                .FirstOrDefault();
+
+            var values = _context.Articles
+                .Where(x => x.CategoryId == categoryId)
+                .OrderByDescending(y => y.ArticleId)
+                .Take(1)
+                .FirstOrDefault();
+
+            return Ok(values);
+        }
+
+
+
+        [HttpGet("GetLastTravelArticle")]
+        public IActionResult GetLastTravelArticle()
+        {
+            var categoryId = _context.Categories
+                .Where(x => x.CategoryName == "Seyehat")
+                .Select(y => y.CategoryId)
+                .FirstOrDefault();
+
+            var values = _context.Articles
+                .Where(x => x.CategoryId == categoryId)
+                .OrderByDescending(y => y.ArticleId)
+                .Take(1)
+                .FirstOrDefault();
+
+            return Ok(values);
+        }
+
     }
 }
