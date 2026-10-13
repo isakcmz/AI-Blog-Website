@@ -9,7 +9,11 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
         public GeneralMapping()
         {
             CreateMap<Article, ResultArticleWithCategoryDto>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName));
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.AppUser.ImageUrl));
+
 
             CreateMap<Article, CreateArticleDto>().ReverseMap();
             CreateMap<Article, UpdateArticleDto>().ReverseMap();

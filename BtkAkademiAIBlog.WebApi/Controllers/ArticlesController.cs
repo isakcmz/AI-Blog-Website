@@ -81,7 +81,11 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         [HttpGet("GetArticlesFeatureSliderByTrue")]
         public IActionResult GetArticlesFeatureSliderByTrue()
         {
-            var values = _context.Articles.Where(y => y.IsFeatureSlider == true).Include(x => x.Category).ToList();
+            var values = _context.Articles
+                .Where(y => y.IsFeatureSlider == true)
+                .Include(x => x.Category)
+                .Include(y => y.AppUser)
+                .ToList();
             return Ok(_mapper.Map<List<ResultArticleWithCategoryDto>>(values));
         }
 
