@@ -18,5 +18,7 @@
 
         public string? AppUserId { get; set; }
         public AppUser AppUser { get; set; }
+
+        public string? SliderCategoryImageUrl { get; set; }
     }
 }

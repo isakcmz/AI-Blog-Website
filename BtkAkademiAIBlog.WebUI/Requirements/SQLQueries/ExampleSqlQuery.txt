@@ -1,0 +1,11 @@
+﻿﻿WITH LastArticles AS
+(
+    SELECT 
+        a.*,
+        ROW_NUMBER() OVER(PARTITION BY a.CategoryId ORDER BY a.CreatedDate DESC) AS rn
+    FROM Articles a
+)
+SELECT TOP (5) *
+FROM LastArticles
+WHERE rn = 1
+ORDER BY CreatedDate DESC;

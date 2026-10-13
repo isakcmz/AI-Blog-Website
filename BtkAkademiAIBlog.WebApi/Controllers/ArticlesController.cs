@@ -151,5 +151,33 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(_mapper.Map<ResultLastTravelArticleDto>(article));
         }
 
+
+
+
+        [HttpGet("GetLastArticlesByDifferentCategories")]
+        public IActionResult GetLastArticlesByDifferentCategories()
+        {
+            var list = _context.Articles
+                .Include(x => x.Category)
+                .OrderByDescending (y => y.CreatedDate)
+                .Select(z => new LastArticleByCategoryDto
+                {
+                    ArticleId = z.ArticleId,
+                    CategoryName = z.Category.CategoryName,
+                    Title = z.Title,
+                    CreatedDate = z.CreatedDate,
+                    SliderCategoryImageUrl = z.SliderCategoryImageUrl
+                }).ToList();
+
+            var result = list
+                .GroupBy(x => x.CategoryName)
+                .Select(g => g.First())
+                .OrderByDescending(y => y.CreatedDate)
+                .Take(5)
+                .ToList();
+
+            return Ok(result);
+        }
+
     }
 }
