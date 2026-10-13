@@ -14,5 +14,6 @@
 
         public bool IsFeatureSlider { get; set; }
         public string FeatureSliderImageUrl { get; set; }
+        public string FeatureImageUrl { get; set; }
     }
 }

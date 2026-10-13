@@ -65,6 +65,9 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FeatureImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FeatureSliderImageUrl")
                         .HasColumnType("nvarchar(max)");
 
