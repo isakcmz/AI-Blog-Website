@@ -104,13 +104,13 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                 .Select(y => y.CategoryId)
                 .FirstOrDefault();
 
-            var values = _context.Articles
+            var article = _context.Articles
                 .Where(x => x.CategoryId == categoryId)
+                .Include(x => x.AppUser)
                 .OrderByDescending(y => y.ArticleId)
-                .Take(1)
                 .FirstOrDefault();
 
-            return Ok(values);
+            return Ok(_mapper.Map<ResultLastTechnologyArticleDto>(article));
         }
 
 
@@ -123,13 +123,13 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                 .Select(y => y.CategoryId)
                 .FirstOrDefault();
 
-            var values = _context.Articles
+            var article = _context.Articles
                 .Where(x => x.CategoryId == categoryId)
+                .Include(x => x.AppUser)
                 .OrderByDescending(y => y.ArticleId)
-                .Take(1)
                 .FirstOrDefault();
 
-            return Ok(values);
+            return Ok(_mapper.Map<ResultLastSportArticleDto>(article));
         }
 
 
@@ -142,13 +142,13 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                 .Select(y => y.CategoryId)
                 .FirstOrDefault();
 
-            var values = _context.Articles
+            var article = _context.Articles
                 .Where(x => x.CategoryId == categoryId)
+                .Include(x => x.AppUser)
                 .OrderByDescending(y => y.ArticleId)
-                .Take(1)
                 .FirstOrDefault();
 
-            return Ok(values);
+            return Ok(_mapper.Map<ResultLastTravelArticleDto>(article));
         }
 
     }

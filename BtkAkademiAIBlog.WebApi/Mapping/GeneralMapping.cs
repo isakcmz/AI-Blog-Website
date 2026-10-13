@@ -14,6 +14,21 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname))
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.AppUser.ImageUrl));
 
+            CreateMap<Article, ResultLastTechnologyArticleDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.AppUser.ImageUrl));
+
+            CreateMap<Article, ResultLastSportArticleDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.AppUser.ImageUrl));
+
+            CreateMap<Article, ResultLastTravelArticleDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname))
+                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.AppUser.ImageUrl));
+
 
             CreateMap<Article, CreateArticleDto>().ReverseMap();
             CreateMap<Article, UpdateArticleDto>().ReverseMap();

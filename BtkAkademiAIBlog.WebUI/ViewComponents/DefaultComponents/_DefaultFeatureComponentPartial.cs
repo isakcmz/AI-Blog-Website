@@ -1,6 +1,7 @@
 ﻿using BtkAkademiAIBlog.WebUI.Dtos.ArticleDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BtkAkademiAIBlog.WebUI.ViewComponents.DefaultComponents
 {
@@ -26,6 +27,8 @@ namespace BtkAkademiAIBlog.WebUI.ViewComponents.DefaultComponents
                 ViewBag.LastTechnologyArticleTitle = values.Title;
                 ViewBag.LastTechnologyArticleFeatureImageUrl = values.FeatureImageUrl;
                 ViewBag.LastTechnologyArticleCreatedDate = values.CreatedDate;
+                ViewBag.LastTechnologyArticleAuthor = values.Name + " " + values.Surname;
+                ViewBag.LastTechnologyArticleImageUrl = values.ImageUrl;
             }
 
             #endregion
@@ -42,6 +45,8 @@ namespace BtkAkademiAIBlog.WebUI.ViewComponents.DefaultComponents
                 ViewBag.LastTravelArticleTitle = values2.Title;
                 ViewBag.LastTravelArticleFeatureImageUrl = values2.FeatureImageUrl;
                 ViewBag.LastTravelArticleCreatedDate = values2.CreatedDate;
+                ViewBag.LastTravelArticleAuthor = values2.Name + " " + values2.Surname;
+                ViewBag.LastTravelArticleImageUrl = values2.ImageUrl;
             }
             
             #endregion
@@ -58,6 +63,8 @@ namespace BtkAkademiAIBlog.WebUI.ViewComponents.DefaultComponents
                 ViewBag.LastSportArticleTitle = values3.Title;
                 ViewBag.LastSportArticleFeatureImageUrl = values3.FeatureImageUrl;
                 ViewBag.LastSportArticleCreatedDate = values3.CreatedDate;
+                ViewBag.LastSportArticleAuthor = values3.Name + " " + values3.Surname;
+                ViewBag.LastSportArticleImageUrl = values3.ImageUrl;
             }
 
             #endregion
