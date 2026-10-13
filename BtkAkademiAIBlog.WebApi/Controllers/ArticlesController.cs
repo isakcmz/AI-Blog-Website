@@ -35,10 +35,11 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateArticle(Article article)
+        public IActionResult CreateArticle(CreateArticleDto createArticleDto)
         {
-            article.CreatedDate = DateTime.Now;
-            _context.Articles.Add(article);
+            createArticleDto.CreatedDate = DateTime.Now;
+            var values = _mapper.Map<Article>(createArticleDto);
+            _context.Articles.Add(values);
             _context.SaveChanges();
             return Ok("Ekleme işlemi başarılı.");
         }
@@ -60,15 +61,16 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         public IActionResult GetArticle(int id)
         {
             var value = _context.Articles.Find(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetArticleByIdDto>(value));
         }
 
 
 
         [HttpPut]
-        public IActionResult UpdateArticle(Article article)
+        public IActionResult UpdateArticle(UpdateArticleDto updateArticleDto)
         {
-            _context.Articles.Update(article);
+            var value = _mapper.Map<Article>(updateArticleDto);
+            _context.Articles.Update(value);
             _context.SaveChanges();
             return Ok("Güncelleme işlemi başarılı");
         }
