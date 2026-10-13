@@ -1,4 +1,6 @@
-﻿using BtkAkademiAIBlog.WebApi.Context;
+﻿using AutoMapper;
+using BtkAkademiAIBlog.WebApi.Context;
+using BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +14,12 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
     public class ArticlesController : ControllerBase
     {
         private readonly BlogAIContext _context;
+        private readonly IMapper _mapper;
 
-        public ArticlesController(BlogAIContext context)
+        public ArticlesController(BlogAIContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -24,8 +28,9 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         [HttpGet]
         public IActionResult ArticleList()
         {
-            var values = _context.Articles.ToList();
-            return Ok(values);
+            var values = _context.Articles.Include(x => x.Category).ToList();
+            var dto = _mapper.Map<List<ResultArticleWithCategoryDto>>(values);
+            return Ok(dto);
         }
 
 

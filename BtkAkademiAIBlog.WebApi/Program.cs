@@ -4,6 +4,7 @@ using BtkAkademiAIBlog.WebApi.Context;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<BlogAIContext>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.
 
