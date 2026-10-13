@@ -1,10 +1,13 @@
 using BtkAkademiAIBlog.WebApi.Context;
+using BtkAkademiAIBlog.WebApi.Entities;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<BlogAIContext>();
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<BlogAIContext>();
 
 // Add services to the container.
 
