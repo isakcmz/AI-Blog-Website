@@ -292,6 +292,12 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FeatueImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFeature")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ThumbnailImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

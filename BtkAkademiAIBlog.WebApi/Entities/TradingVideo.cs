@@ -7,5 +7,7 @@
         public string ThumbnailImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public string EmbedVideoUrl { get; set; }
+        public bool IsFeature { get; set; }
+        public string? FeatueImageUrl { get; set; }
     }
 }
