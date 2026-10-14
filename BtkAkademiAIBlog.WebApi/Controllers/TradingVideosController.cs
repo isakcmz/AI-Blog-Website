@@ -26,6 +26,17 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         }
 
 
+        [HttpGet("GetTradingFeatureVideo")]
+        public IActionResult GetTradingFeatureVideo()
+        {
+            var value = _context.TradingVideos
+                .Where(x => x.IsFeature == true)
+                .FirstOrDefault();
+
+            return Ok(value);
+        }
+
+
 
         [HttpPost]
         public IActionResult CreateTradingVideo(TradingVideo tradingVideo)
