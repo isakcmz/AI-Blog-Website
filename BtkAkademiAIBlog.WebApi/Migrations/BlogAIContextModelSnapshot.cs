@@ -159,6 +159,9 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.Property<string>("FeatureSliderImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image300x300Url")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsFeatureSlider")
                         .HasColumnType("bit");
 

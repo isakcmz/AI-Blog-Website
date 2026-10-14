@@ -247,5 +247,26 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
             return Ok(values);
         }
+
+
+
+
+        [HttpGet("GetLast4ArticlesWithCategory")]
+        public IActionResult GetLast4ArticlesWithCategory()
+        {
+            var values = _context.Articles
+                .Include(x => x.Category)
+                .OrderByDescending(y => y.ArticleId)
+                .Take(4)
+                .Select(z => new ResultLast4ArticleWithCategoryDto
+                {
+                    ArticleId = z.ArticleId,
+                    Title = z.Title,
+                    CategoryName = z.Category.CategoryName,
+                    Image300x300Url = z.Image300x300Url
+                }).ToList();
+
+            return Ok(values);
+        }
     }
 }

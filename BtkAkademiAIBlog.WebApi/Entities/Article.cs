@@ -23,5 +23,7 @@
         public bool IsTrendingStories { get; set; }
         public bool IsLastArticle { get; set; }
         public string? LastArticleImageUrl { get; set; }
+        
+        public string? Image300x300Url { get; set; }
     }
 }

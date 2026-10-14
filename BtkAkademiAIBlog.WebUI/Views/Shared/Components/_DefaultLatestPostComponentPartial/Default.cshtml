@@ -31,46 +31,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-lg-4 md-mt-40">
-                <ul class="back-hero-bottom">
-                    <li>
-                        <div class="image-areas">
-                            <a href="#"><img src="/template/assets/images/latest-news/2.jpg" alt="image"></a>
-                        </div>
-                        <div class="back-btm-content">
-                            <a href="#" class="back-cates">Travel</a>
-                            <h3><a href="#">Top 20 best thems plugn & on this year visit Expart</a></h3>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="image-areas">
-                            <a href="#"><img src="/template/assets/images/latest-news/3.jpg" alt="image"></a>
-                        </div>
-                        <div class="back-btm-content">
-                            <a href="#" class="back-cates">Art & Design</a>
-                            <h3><a href="#">That woman comes from of heaven look like angel</a></h3>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="image-areas">
-                            <a href="#"><img src="/template/assets/images/latest-news/4.jpg" alt="image"></a>
-                        </div>
-                        <div class="back-btm-content">
-                            <a href="#" class="back-cates">Lifestyle</a>
-                            <h3><a href="#">Green leaves photo plant the with cute girl modeling</a></h3>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="image-areas">
-                            <a href="#"><img src="/template/assets/images/latest-news/5.jpg" alt="image"></a>
-                        </div>
-                        <div class="back-btm-content">
-                            <a href="#" class="back-cates">Fashion</a>
-                            <h3><a href="#">Peveraging tech to drive a better IT best experience</a></h3>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+
+            @await Component.InvokeAsync("_DefaultLast4ArticlesWithCategoryComponentPartial")
+
         </div>
     </div>
 </div>
