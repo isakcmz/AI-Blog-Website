@@ -179,5 +179,38 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(result);
         }
 
+
+
+
+        [HttpGet("GetTrendingStoriesArticles")]
+        public IActionResult GetTrendingStoriesArticles()
+        {
+            var values = _context.Articles
+                .Where(x => x.IsTrendingStories == true)
+                .Include(y => y.Category)
+                .Include(z => z.AppUser)
+                .Select(a => new ResultArticleTrendingStoriesDto
+                {
+                    ArticleId = a.ArticleId,
+                    CategoryId = a.CategoryId,
+                    Title = a.Title,
+                    CreatedDate = a.CreatedDate,
+                    CategoryName = a.Category.CategoryName,
+                    Content = a.Content,
+                    CoverImageUrl = a.CoverImageUrl,
+                    FeatureImageUrl = a.FeatureImageUrl,
+                    FeatureSliderImageUrl = a.FeatureSliderImageUrl,
+                    IsFeatureSlider = a.IsFeatureSlider,
+                    IsTrendingStories = a.IsTrendingStories,
+                    MainImageUrl = a.MainImageUrl,
+                    Name = a.AppUser.Name,
+                    Surname = a.AppUser.Surname,
+                    SliderCategoryImageUrl = a.SliderCategoryImageUrl
+
+                }).ToList();
+
+            return Ok(values);
+        }
+
     }
 }

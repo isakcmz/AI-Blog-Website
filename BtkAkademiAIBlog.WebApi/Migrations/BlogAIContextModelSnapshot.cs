@@ -162,6 +162,9 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.Property<bool>("IsFeatureSlider")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsTrendingStories")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MainImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

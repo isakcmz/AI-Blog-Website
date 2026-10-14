@@ -20,5 +20,6 @@
         public AppUser AppUser { get; set; }
 
         public string? SliderCategoryImageUrl { get; set; }
+        public bool IsTrendingStories { get; set; }
     }
 }
