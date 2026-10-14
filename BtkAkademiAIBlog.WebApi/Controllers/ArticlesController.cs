@@ -159,7 +159,7 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         {
             var list = _context.Articles
                 .Include(x => x.Category)
-                .OrderByDescending (y => y.CreatedDate)
+                .OrderByDescending(y => y.CreatedDate)
                 .Select(z => new LastArticleByCategoryDto
                 {
                     ArticleId = z.ArticleId,
@@ -212,5 +212,40 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(values);
         }
 
+
+
+
+
+        [HttpGet("GetLastArticle")]
+        public IActionResult GetLastArticle()
+        {
+            var values = _context.Articles
+                .Where(x => x.IsLastArticle == true)
+                .Include(y => y.Category)
+                .Include(z => z.AppUser)
+                .Select(a => new ResultLastArticleDto
+                {
+                    ArticleId = a.ArticleId,
+                    CategoryId = a.CategoryId,
+                    Title = a.Title,
+                    CreatedDate = a.CreatedDate,
+                    CategoryName = a.Category.CategoryName,
+                    Content = a.Content,
+                    CoverImageUrl = a.CoverImageUrl,
+                    FeatureImageUrl = a.FeatureImageUrl,
+                    FeatureSliderImageUrl = a.FeatureSliderImageUrl,
+                    IsFeatureSlider = a.IsFeatureSlider,
+                    IsTrendingStories = a.IsTrendingStories,
+                    MainImageUrl = a.MainImageUrl,
+                    Name = a.AppUser.Name,
+                    Surname = a.AppUser.Surname,
+                    SliderCategoryImageUrl = a.SliderCategoryImageUrl,
+                    IsLastArticle = a.IsLastArticle,
+                    LastArticleImageUrl = a.LastArticleImageUrl,
+
+                }).FirstOrDefault();
+
+            return Ok(values);
+        }
     }
 }

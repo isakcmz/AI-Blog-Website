@@ -21,5 +21,7 @@
 
         public string? SliderCategoryImageUrl { get; set; }
         public bool IsTrendingStories { get; set; }
+        public bool IsLastArticle { get; set; }
+        public string? LastArticleImageUrl { get; set; }
     }
 }

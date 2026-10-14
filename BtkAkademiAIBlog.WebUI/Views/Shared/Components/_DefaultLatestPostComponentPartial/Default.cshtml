@@ -1,4 +1,6 @@
-﻿<div class="back-hero-area back-latest-posts">
+﻿
+
+<div class="back-hero-area back-latest-posts">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -15,14 +17,14 @@
                 <ul>
                     <li>
                         <div class="image-area">
-                            <a href="#"><img src="/template/assets/images/latest-news/1.jpg" alt="image"></a>
+                            <a href="#"><img src="@ViewBag.LastArticleImageUrl" alt="image"></a>
                             <div class="back-btm-content">
-                                <a href="#" class="back-cate back-tra">Teknoloji</a>
-                                <h3><a href="#">Yapay Zekada Video Değrimi <br>Sora vs Gemini</a></h3>
+                                <a href="#" class="back-cate back-tra">@ViewBag.CategoryName</a>
+                                <h3><a href="#">@ViewBag.Title</a></h3>
                                 <ul>
-                                    <li class="back-author"><span><img src="/template/assets/images/author/1.jpg" alt="image"></span><a href="#">by Jon Deo</a></li>
-                                    <li class="back-date"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>March 26, 2022</li>
-                                    <li class="back-comments"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>95 Comments</li>
+                                    <li class="back-author"><span><img src="/template/assets/images/author/1.jpg" alt="image"></span><a href="#">@ViewBag.NameSurname</a></li>
+                                    <li class="back-date"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>@ViewBag.CreatedDate.ToString("dd-MMM-yyyy")</li>
+                                    <li class="back-comments"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>0 Yorum</li>
                                 </ul>
                             </div>
                         </div>
