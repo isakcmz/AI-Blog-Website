@@ -1,7 +1,9 @@
 ﻿using BtkAkademiAIBlog.WebApi.Context;
+using BtkAkademiAIBlog.WebApi.Dtos.TradingVideoDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BtkAkademiAIBlog.WebApi.Controllers
 {
@@ -31,7 +33,19 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         {
             var value = _context.TradingVideos
                 .Where(x => x.IsFeature == true)
-                .FirstOrDefault();
+                .Include(y => y.AppUser)
+                .Select(a => new GetTradingVideoFeatureByTrueDto
+                {
+                    CreatedDate = a.CreatedDate,
+                    EmbedVideoUrl = a.EmbedVideoUrl,
+                    FeatueImageUrl = a.FeatueImageUrl,
+                    Title = a.Title,
+                    IsFeature = a.IsFeature,
+                    ThumbnailImageUrl = a.ThumbnailImageUrl,
+                    TradingVideoId = a.TradingVideoId,
+                    UserNameSurname = a.AppUser.Name + " " + a.AppUser.Surname,
+                    UserImageUrl = a.AppUser.ImageUrl
+                }).FirstOrDefault();
 
             return Ok(value);
         }

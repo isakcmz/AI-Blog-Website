@@ -9,5 +9,8 @@
         public string EmbedVideoUrl { get; set; }
         public bool IsFeature { get; set; }
         public string? FeatueImageUrl { get; set; }
+
+        public string UserNameSurname { get; set; }
+        public string UserImageUrl { get; set; }
     }
 }
