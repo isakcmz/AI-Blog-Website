@@ -2,6 +2,7 @@
 using BtkAkademiAIBlog.WebUI.Dtos.TradingVideoDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace BtkAkademiAIBlog.WebUI.Controllers
 {
@@ -47,6 +48,10 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(createCategoryDto);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            await client.PostAsync("https://localhost:7017/api/Categories", stringContent);
             return RedirectToAction("CategoryList");
         }
 

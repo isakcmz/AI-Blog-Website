@@ -1,4 +1,6 @@
-﻿using BtkAkademiAIBlog.WebApi.Context;
+﻿using AutoMapper;
+using BtkAkademiAIBlog.WebApi.Context;
+using BtkAkademiAIBlog.WebApi.Dtos.CategoryDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +12,12 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly BlogAIContext _context;
+        private readonly IMapper _mapper;
 
-        public CategoriesController(BlogAIContext context)
+        public CategoriesController(BlogAIContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -28,9 +32,10 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateCategory(Category category)
+        public IActionResult CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            _context.Categories.Add(category);
+            var value = _mapper.Map<Category>(createCategoryDto);
+            _context.Categories.Add(value);
             _context.SaveChanges();
             return Ok("Kategori Ekleme İşlemi Başarılı");
         }
