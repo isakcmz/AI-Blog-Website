@@ -1,8 +1,10 @@
 ﻿using BtkAkademiAIBlog.WebUI.Dtos.ArticleDtos;
 using BtkAkademiAIBlog.WebUI.Dtos.CategoryDtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BtkAkademiAIBlog.WebUI.Controllers
 {
@@ -40,14 +42,27 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
         [HttpGet]
-        public IActionResult CreateArticle()
+        public async Task<IActionResult> CreateArticle()
         {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync("https://localhost:7017/api/Categories");
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+            List<SelectListItem> categoryValues = (from x in values
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryId.ToString()
+                                                   }).ToList();
+            ViewBag.CategoryValues = categoryValues;
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateArticle(CreateArticleDto createArticleDto)
         {
+            createArticleDto.CreatedDate = DateTime.Now;
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createArticleDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -78,6 +93,18 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateArticle(int id)
         {
+            var client1 = _httpClientFactory.CreateClient();
+            var responseMessage1 = await client1.GetAsync("https://localhost:7017/api/Categories");
+            var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
+            var values1 = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData1);
+            List<SelectListItem> categoryValues = (from x in values1
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryId.ToString()
+                                                   }).ToList();
+            ViewBag.CategoryValues = categoryValues;
+
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync($"https://localhost:7017/api/Articles/GetArticle?id={id}");
             if (responseMessage.IsSuccessStatusCode)

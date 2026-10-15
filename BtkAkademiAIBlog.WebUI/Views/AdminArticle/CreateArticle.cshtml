@@ -38,7 +38,11 @@
                 <input type="text" asp-for="MainImageUrl" class="form-control" />
                 <br />
                 <label> Kategori</label>
-                <input type="text" asp-for="Title" class="form-control" />
+                <select asp-for="CategoryId" class="form-control" asp-items="(IEnumerable<SelectListItem>)ViewBag.CategoryValues">
+                    <option value="">
+                        --Kategori Seçiniz--
+                    </option>
+                </select>
                 <br />
                 <label> Öne Çıkan(Feature) Slider Görsel URL</label>
                 <input type="text" asp-for="FeatureSliderImageUrl" class="form-control" />
@@ -47,7 +51,7 @@
                 <input type="text" asp-for="FeatureImageUrl" class="form-control" />
                 <br />
                 <label> Yazar Bilgisi</label>
-                <input type="text" asp-for="Title" class="form-control" />
+                <input type="text" asp-for="AppUserId" class="form-control" />
                 <br />
                 <label> Makale İçeriği</label>
                 <textarea class="form-control" asp-for="Content"></textarea>
