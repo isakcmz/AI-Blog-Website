@@ -36,6 +36,7 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
             CreateMap<Article, GetArticleByIdDto>().ReverseMap();
 
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
         }
     }
 }
