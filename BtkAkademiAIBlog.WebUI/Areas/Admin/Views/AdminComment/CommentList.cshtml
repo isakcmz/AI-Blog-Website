@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "CommentList";
     Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
 }
 
 
@@ -30,18 +31,28 @@
                     <thead class="table-secondary">
                         <tr>
                             <th>#</th>
-                            <th>Kullanıcı Id</th>
+                            <th>Makale</th>
+                            <th>Kullancı</th>
                             <th>Yorum</th>
+                            <th>Tarih</th>
+                            <th>Onaylandı Mı?</th>
+                            <th>Durumu</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach (var item in Model)
                         {
+                            count++;
+
                             <tr>
-                                <td>@item.CommentId</td>
-                                <td>@item.AppUserId</td>
+                                <td>@count</td>
+                                <td>@item.Title</td>
+                                <td>@item.Name @item.Surname</td>
                                 <td>@item.CommentDetail</td>
+                                <td>@item.CommentDate.ToString("dd-MMM-yyyy")</td>
+                                <td>@item.IsConfirm</td>
+                                <td>@item.CommentStatus</td>
                             </tr>
                         }
 

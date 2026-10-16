@@ -8,6 +8,8 @@
         public string CommentDetail { get; set; }
         public bool IsConfirm { get; set; }
         public string CommentStatus { get; set; }
-        public int ArticleId { get; set; }
+        public string Title { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 }

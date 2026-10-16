@@ -18,7 +18,7 @@ namespace BtkAkademiAIBlog.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CommentList()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7017/api/Comments");
+            var responseMessage = await client.GetAsync("https://localhost:7017/api/Comments/CommentListWithArticleAndAuthor");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
