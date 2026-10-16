@@ -1,6 +1,9 @@
+using BtkAkademiAIBlog.WebUI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
+builder.Services.AddScoped<OpenAIArticleService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -1,5 +1,6 @@
 ﻿using BtkAkademiAIBlog.WebUI.Dtos.ArticleDtos;
 using BtkAkademiAIBlog.WebUI.Dtos.CategoryDtos;
+using BtkAkademiAIBlog.WebUI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -11,10 +12,12 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
     public class AdminArticleController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly OpenAIArticleService _openAIArticleService;
 
-        public AdminArticleController(IHttpClientFactory httpClientFactory)
+        public AdminArticleController(IHttpClientFactory httpClientFactory, OpenAIArticleService openAIArticleService)
         {
             _httpClientFactory = httpClientFactory;
+            _openAIArticleService = openAIArticleService;
         }
 
 
@@ -132,8 +135,25 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
 
-        public async Task<IActionResult> aa()
+
+
+        [HttpGet]
+        public IActionResult CreateArticleWithOpenAI()
         {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateArticleWithOpenAI(string topic)
+        {
+            if (string.IsNullOrEmpty(topic))
+            {
+                ViewBag.Error = "Lütfen konu giriniz!";
+                return View();
+            }
+
+            ViewBag.Article = await _openAIArticleService.GenerateArticleAsync(topic);
             return View();
         }
     }

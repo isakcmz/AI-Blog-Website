@@ -47,7 +47,7 @@ namespace BtkAkademiAIBlog.WebUI.Services
                     {
                         role = "user",
                         content = $"'{topic}' konusu hakkında; okuyucuyu meraklandıran " +
-                                  "bir giriş paragrafı, konuyu farklı boyutlarıyla ele alan " +
+                                  "bir başlığı, bir giriş paragrafı, konuyu farklı boyutlarıyla ele alan " +
                                   "detaylı alt başlıklar ve vurucu bir sonuç bölümünden oluşan, " +
                                   "laf kalabalığı içermeyen, minimum 1500 karakter uzunluğunda " +
                                   "kapsamlı ve özgün bir makale yaz."
