@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos;
 using BtkAkademiAIBlog.WebApi.Dtos.CategoryDtos;
+using BtkAkademiAIBlog.WebApi.Dtos.CommentDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 
 namespace BtkAkademiAIBlog.WebApi.Mapping
@@ -37,6 +38,12 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
 
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+
+            CreateMap<Comment, ResultCommentDto>().ReverseMap();
+            CreateMap<Comment, CreateCommentDto>().ReverseMap();
+            CreateMap<Comment, UpdateCommentDto>().ReverseMap();
+            CreateMap<Comment, GetCommentByIdDto>().ReverseMap();
+
         }
     }
 }
