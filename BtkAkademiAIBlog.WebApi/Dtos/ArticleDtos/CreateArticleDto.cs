@@ -9,7 +9,6 @@
         public DateTime CreatedDate { get; set; }
 
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
 
         public bool IsFeatureSlider { get; set; }
         public string FeatureSliderImageUrl { get; set; }
