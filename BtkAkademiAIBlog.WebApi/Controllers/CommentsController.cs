@@ -4,6 +4,7 @@ using BtkAkademiAIBlog.WebApi.Dtos.CommentDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BtkAkademiAIBlog.WebApi.Controllers
 {
@@ -71,6 +72,22 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         {
             var value = _context.Comments.Find(id);
             return Ok(value);
+        }
+
+
+
+
+
+        [HttpGet("CommentListWithArticleAndAuthor")]
+        public IActionResult CommentListWithArticleAndAuthor()
+        {
+            var values = _context.Comments
+                .Include(x => x.Article)
+                .Include(y => y.AppUser)
+                .ToList();
+            
+            var dto = _mapper.Map<List<ResultCommentWithArticleAndAuthorDto>>(values);
+            return Ok(dto);
         }
     }
 }

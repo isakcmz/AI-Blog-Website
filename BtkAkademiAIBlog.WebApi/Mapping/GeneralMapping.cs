@@ -44,6 +44,12 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
             CreateMap<Comment, UpdateCommentDto>().ReverseMap();
             CreateMap<Comment, GetCommentByIdDto>().ReverseMap();
 
+
+            CreateMap<Comment, ResultCommentWithArticleAndAuthorDto>()
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Article.Title))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname));
+
         }
     }
 }
