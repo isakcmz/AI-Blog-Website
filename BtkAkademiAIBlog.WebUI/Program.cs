@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<OpenAIArticleService>();
+builder.Services.AddScoped<OpenAIArticleTitleService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

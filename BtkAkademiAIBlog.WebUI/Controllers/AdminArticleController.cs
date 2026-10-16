@@ -13,11 +13,13 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly OpenAIArticleService _openAIArticleService;
+        private readonly OpenAIArticleTitleService _openAIArticleTitleService;
 
-        public AdminArticleController(IHttpClientFactory httpClientFactory, OpenAIArticleService openAIArticleService)
+        public AdminArticleController(IHttpClientFactory httpClientFactory, OpenAIArticleService openAIArticleService, OpenAIArticleTitleService openAIArticleTitleService)
         {
             _httpClientFactory = httpClientFactory;
             _openAIArticleService = openAIArticleService;
+            _openAIArticleTitleService = openAIArticleTitleService;
         }
 
 
@@ -154,6 +156,33 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
             }
 
             ViewBag.Article = await _openAIArticleService.GenerateArticleAsync(topic);
+            return View();
+        }
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult CreateArticleTitleWithOpenAI()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateArticleTitleWithOpenAI(string topic)
+        {
+            if (string.IsNullOrEmpty(topic))
+            {
+                ViewBag.Error = "Lütfen anahtar kelimeleri giriniz!";
+                return View();
+            }
+
+            ViewBag.Article = await _openAIArticleTitleService.GenerateArticleTitleAsync(topic);
             return View();
         }
     }
