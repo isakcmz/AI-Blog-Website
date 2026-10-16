@@ -17,6 +17,8 @@ namespace BtkAkademiAIBlog.WebApi.Context
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<TradingVideo> TradingVideos { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+
 
     }
 }

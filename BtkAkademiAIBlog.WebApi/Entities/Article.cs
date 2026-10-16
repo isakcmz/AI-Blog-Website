@@ -25,5 +25,8 @@
         public string? LastArticleImageUrl { get; set; }
         
         public string? Image300x300Url { get; set; }
+
+        public List<Comment> Comments { get; set; }
+
     }
 }
