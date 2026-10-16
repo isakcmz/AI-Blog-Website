@@ -125,5 +125,16 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
             await client.PutAsync("https://localhost:7017/api/Articles/", stringContent);
             return RedirectToAction("ArticleList");
         }
+
+
+
+
+
+
+
+        public async Task<IActionResult> aa()
+        {
+            return View();
+        }
     }
 }
