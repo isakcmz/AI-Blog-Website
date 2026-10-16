@@ -9,5 +9,6 @@
         public bool IsConfirm { get; set; }
         public string CommentStatus { get; set; }
         public int ArticleId { get; set; }
+        public decimal Rating { get; set; }
     }
 }

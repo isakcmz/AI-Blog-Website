@@ -13,5 +13,6 @@ namespace BtkAkademiAIBlog.WebApi.Dtos.CommentDtos
         public string Title { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public decimal Rating { get; set; }
     }
 }

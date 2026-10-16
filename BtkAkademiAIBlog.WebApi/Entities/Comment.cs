@@ -11,5 +11,7 @@
         public string CommentStatus { get; set; } 
         public int ArticleId { get; set; }
         public Article Article { get; set; }
+
+        public decimal Rating { get; set; }
     }
 }
