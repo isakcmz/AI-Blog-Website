@@ -1,0 +1,51 @@
+﻿[HttpGet]
+        public IActionResult CreateComment()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(string commentDetail)
+        {
+            using(var client = new HttpClient())
+            {
+                var apiKey = "";
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+                try
+                {
+                    var translateRequestBody = new
+                    {
+                        inputs = commentDetail
+                    };
+
+                    var translateJson = System.Text.Json.JsonSerializer.Serialize(translateRequestBody);
+                    var translateContent = new StringContent(translateJson, Encoding.UTF8, "application/json");
+
+                    var translateResponse = await client.PostAsync("https://api-inferance.huggingface.co/models/Helsinki-NLP/opus-mt-tr-en", translateContent);
+                    var translateResponseString = await translateResponse.Content.ReadAsStringAsync();
+
+                    string englishText = commentDetail;
+                    
+                    if(translateResponseString.TrimStart().StartsWith("["))
+                    {
+                        var translateDoc = JsonDocument.Parse(translateResponseString);
+                        englishText = translateDoc
+                            .RootElement[0]
+                            .GetProperty("translation_text")
+                            .GetString();
+                    }
+
+                    ViewBag.v = englishText;
+
+                }
+
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                return View();
+            }
+        }
