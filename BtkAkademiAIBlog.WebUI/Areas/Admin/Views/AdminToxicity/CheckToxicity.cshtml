@@ -1,0 +1,155 @@
+﻿@using System.Globalization
+@{
+    ViewData["Title"] = "CheckToxicity";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    var inv = CultureInfo.InvariantCulture;
+}
+
+<main class="page-content">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-shield-alt"></i> AI Toksiklik Analizi
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="mb-3">
+                                <label for="CommentText" class="form-label">Analiz Edilecek Metin (İngilizce):</label>
+                                <textarea class="form-control" id="CommentText" name="CommentText"
+                                          rows="5" placeholder="Analiz edilmesini istediğiniz İngilizce metni buraya yazın..."
+                                          required>@ViewBag.OriginalText</textarea>
+                                <small class="text-muted">
+                                    Model: Google Gemini (LLM tabanlı toksiklik analizi)
+                                </small>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Analiz Et
+                            </button>
+                        </form>
+
+                        @if (ViewBag.Success == true)
+                        {
+                            var items = new[]
+                            {
+                                                (Label: "Toksik (Toxic)", Icon: "fa-radiation", Percent: (double)ViewBag.ToxicPercent, Bar: "bg-primary", Badge: "bg-primary"),
+                                                (Label: "Ağır Toksik (Severe Toxic)", Icon: "fa-skull-crossbones", Percent: (double)ViewBag.SevereToxicPercent, Bar: "bg-danger", Badge: "bg-danger"),
+                                                (Label: "Müstehcen (Obscene)", Icon: "fa-ban", Percent: (double)ViewBag.ObscenePercent, Bar: "bg-warning", Badge: "bg-warning text-dark"),
+                                                (Label: "Tehdit (Threat)", Icon: "fa-fist-raised", Percent: (double)ViewBag.ThreatPercent, Bar: "bg-danger", Badge: "bg-danger"),
+                                                (Label: "Hakaret (Insult)", Icon: "fa-angry", Percent: (double)ViewBag.InsultPercent, Bar: "bg-warning", Badge: "bg-warning text-dark"),
+                                                (Label: "Kimlik Nefreti (Identity Hate)", Icon: "fa-user-slash", Percent: (double)ViewBag.IdentityHatePercent, Bar: "bg-danger", Badge: "bg-danger")
+                                                };
+
+                            <hr class="my-4" />
+
+                            <div class="alert alert-@ViewBag.LevelColor" role="alert">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-exclamation-triangle"></i> Analiz Sonucu
+                                </h5>
+                                <p class="mb-0">
+                                    <strong>Toksiklik Seviyesi:</strong> @ViewBag.ToxicityLevel
+                                    <span class="badge bg-@ViewBag.LevelColor">@ViewBag.MaxLabel</span>
+                                </p>
+                                <p class="mb-0">
+                                    <strong>Genel Skor:</strong> %@Math.Round(ViewBag.MaxScore * 100, 2)
+                                </p>
+                            </div>
+
+                            <div class="card mt-3">
+                                <div class="card-header bg-dark text-white">
+                                    <h5 class="mb-0">Detaylı Analiz Skorları</h5>
+                                </div>
+                                <div class="card-body">
+                                    @foreach (var item in items)
+                                    {
+                                        // CSS için nokta ayraçlı değer (Türkçe kültürde virgül çıkmasın)
+                                        var width = item.Percent.ToString("0.##", inv);
+
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span><i class="fas @item.Icon"></i> <strong>@item.Label:</strong></span>
+                                                <span class="badge @item.Badge">%@item.Percent</span>
+                                            </div>
+                                            <div class="progress" style="height: 25px;">
+                                                <div class="progress-bar @item.Bar" role="progressbar"
+                                                     style="width: @(width)%"
+                                                     aria-valuenow="@width"
+                                                     aria-valuemin="0" aria-valuemax="100">
+                                                    @item.Percent%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="card">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">Analiz Edilen Metin</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0">@ViewBag.OriginalText</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle"></i>
+                                    Model: @ViewBag.Model |
+                                    Skorlar 0 (temiz) ile 1 (toksik) arasında değişir.
+                                </small>
+                            </div>
+                        }
+
+                        @if (ViewBag.Success == false)
+                        {
+                            <hr class="my-4" />
+                            <div class="alert alert-danger" role="alert">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-exclamation-circle"></i> Hata!
+                                </h5>
+                                <p><strong>@ViewBag.Error</strong></p>
+                                @if (!string.IsNullOrEmpty(ViewBag.Message))
+                                {
+                                    <p class="mb-0">Mesaj: @ViewBag.Message</p>
+                                }
+                                @if (!string.IsNullOrEmpty(ViewBag.Details))
+                                {
+                                    <hr />
+                                    <details>
+                                        <summary>Detaylar</summary>
+                                        <pre class="mt-2">@ViewBag.Details</pre>
+                                    </details>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="card mt-4 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="fas fa-lightbulb"></i> Analiz Hakkında</h6>
+                        <p class="card-text small">
+                            Metin, Google Gemini modeli tarafından 6 farklı kategoride puanlanır:
+                        </p>
+                        <ul class="small">
+                            <li><strong>Toxic:</strong> Genel toksik içerik</li>
+                            <li><strong>Severe Toxic:</strong> Çok ağır toksik içerik</li>
+                            <li><strong>Obscene:</strong> Müstehcen içerik</li>
+                            <li><strong>Threat:</strong> Tehdit içeren ifadeler</li>
+                            <li><strong>Insult:</strong> Hakaret içeren ifadeler</li>
+                            <li><strong>Identity Hate:</strong> Kimlik tabanlı nefret söylemi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</main>
