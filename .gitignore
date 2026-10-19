@@ -366,3 +366,6 @@ FodyWeavers.xsd
 # Local development secrets
 **/appsettings.Development.json
 **/appsettings.Local.json
+
+
+**/wwwroot/voices/
