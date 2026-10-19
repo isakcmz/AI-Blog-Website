@@ -1,275 +1,324 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/AdminLayout/Index.cshtml";
+
+    var results = ViewBag.Results as List<TavilyResult> ?? new List<TavilyResult>();
+
+    string GetHost(string? url)
+    {
+        return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+            ? uri.Host.Replace("www.", "")
+            : url ?? "";
+    }
 }
 
 <main class="page-content">
 
-
-    <style>  
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
+    <style>
+        /* Tüm stiller .tavily-page altında; layout'u (body, *, vb.) etkilemez */
+        .tavily-page {
+            --tv-accent: #2f6fed;
+            --tv-accent-dark: #2459c7;
+            --tv-text: #1f2937;
+            --tv-muted: #6b7280;
+            --tv-border: #e5e7eb;
+            --tv-surface: #ffffff;
+            --tv-soft: #f3f6fd;
+            max-width: 860px;
             margin: 0 auto;
+            padding: 28px 16px 48px;
+            color: var(--tv-text);
         }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            padding-top: 30px;
-        }
-
-            .header h1 {
-                font-size: 2.5rem;
-                margin-bottom: 10px;
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            .tavily-page * {
+                box-sizing: border-box;
             }
 
-            .header p {
-                font-size: 1.1rem;
-                opacity: 0.9;
+            .tavily-page .tv-title {
+                font-size: 1.6rem;
+                font-weight: 700;
+                margin: 0 0 6px;
             }
 
-        .search-box {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-            .form-group label {
-                display: block;
-                font-weight: 600;
-                color: #333;
-                margin-bottom: 10px;
-                font-size: 1.1rem;
+            .tavily-page .tv-subtitle {
+                margin: 0 0 24px;
+                color: var(--tv-muted);
+                font-size: 0.98rem;
             }
 
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-            .form-control:focus {
-                outline: none;
-                border-color: #667eea;
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            }
-
-        .btn-search {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-weight: 600;
-            width: 100%;
-        }
-
-            .btn-search:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            }
-
-            .btn-search:active {
-                transform: translateY(0);
-            }
-
-        .error-box {
-            background: #fee;
-            border: 1px solid #fcc;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            color: #c33;
-        }
-
-        .results-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .answer-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-            .answer-box h2 {
-                font-size: 1.5rem;
-                margin-bottom: 15px;
+            /* Arama kutusu */
+            .tavily-page .tv-search {
                 display: flex;
-                align-items: center;
+                gap: 10px;
+                background: var(--tv-surface);
+                border: 1px solid var(--tv-border);
+                border-radius: 12px;
+                padding: 10px;
+                box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
             }
 
-                .answer-box h2::before {
-                    content: "💡";
-                    margin-right: 10px;
-                    font-size: 1.8rem;
+                .tavily-page .tv-search:focus-within {
+                    border-color: var(--tv-accent);
+                    box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
                 }
 
-            .answer-box p {
-                font-size: 1.1rem;
-                line-height: 1.6;
+            .tavily-page .tv-input {
+                flex: 1;
+                min-width: 0;
+                border: 0;
+                outline: 0;
+                background: transparent;
+                padding: 10px 12px;
+                font-size: 1rem;
+                color: var(--tv-text);
             }
 
-        .sources-title {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
+                .tavily-page .tv-input::placeholder {
+                    color: #9ca3af;
+                }
 
-        .source-card {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-            .source-card:hover {
-                transform: translateX(5px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            .tavily-page .tv-btn {
+                border: 0;
+                border-radius: 8px;
+                background: var(--tv-accent);
+                color: #fff;
+                font-weight: 600;
+                font-size: 0.98rem;
+                padding: 10px 26px;
+                cursor: pointer;
+                transition: background 0.15s;
             }
 
-            .source-card h3 {
-                color: #667eea;
-                margin-bottom: 10px;
-                font-size: 1.2rem;
+                .tavily-page .tv-btn:hover {
+                    background: var(--tv-accent-dark);
+                }
+
+                .tavily-page .tv-btn:focus-visible {
+                    outline: 3px solid rgba(47, 111, 237, 0.4);
+                    outline-offset: 2px;
+                }
+
+                .tavily-page .tv-btn:disabled {
+                    opacity: 0.7;
+                    cursor: wait;
+                }
+
+            /* Hata */
+            .tavily-page .tv-error {
+                margin-top: 16px;
+                padding: 12px 16px;
+                border: 1px solid #f5c2c0;
+                border-left: 4px solid #d92d20;
+                border-radius: 8px;
+                background: #fef3f2;
+                color: #912018;
+                font-size: 0.95rem;
             }
 
-            .source-card a {
-                color: #667eea;
+            /* Cevap */
+            .tavily-page .tv-answer {
+                margin-top: 28px;
+                background: var(--tv-soft);
+                border: 1px solid #d9e4fb;
+                border-left: 4px solid var(--tv-accent);
+                border-radius: 10px;
+                padding: 20px 24px;
+            }
+
+                .tavily-page .tv-answer h2 {
+                    margin: 0 0 8px;
+                    font-size: 1.05rem;
+                    font-weight: 700;
+                }
+
+                .tavily-page .tv-answer p {
+                    margin: 0;
+                    line-height: 1.7;
+                    font-size: 1.02rem;
+                }
+
+            /* Kaynaklar */
+            .tavily-page .tv-sources-head {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                margin: 32px 0 12px;
+            }
+
+                .tavily-page .tv-sources-head h2 {
+                    margin: 0;
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                }
+
+                .tavily-page .tv-sources-head span {
+                    color: var(--tv-muted);
+                    font-size: 0.9rem;
+                }
+
+            .tavily-page .tv-source {
+                display: block;
+                background: var(--tv-surface);
+                border: 1px solid var(--tv-border);
+                border-radius: 10px;
+                padding: 16px 18px;
+                margin-bottom: 12px;
+            }
+
+            .tavily-page .tv-source-host {
+                font-size: 0.85rem;
+                color: var(--tv-muted);
+                margin-bottom: 4px;
+            }
+
+            .tavily-page .tv-source-title {
+                display: inline-block;
+                font-size: 1.05rem;
+                font-weight: 600;
+                color: var(--tv-accent);
                 text-decoration: none;
-                font-weight: 500;
-                word-break: break-all;
+                line-height: 1.4;
             }
 
-                .source-card a:hover {
+                .tavily-page .tv-source-title:hover {
                     text-decoration: underline;
                 }
 
-            .source-card p {
-                color: #555;
+                .tavily-page .tv-source-title:focus-visible {
+                    outline: 3px solid rgba(47, 111, 237, 0.4);
+                    outline-offset: 2px;
+                    border-radius: 2px;
+                }
+
+            .tavily-page .tv-source-text {
+                margin: 8px 0 12px;
+                color: #4b5563;
+                font-size: 0.93rem;
                 line-height: 1.6;
-                margin-top: 10px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
 
-        .score-badge {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
+            .tavily-page .tv-score {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.82rem;
+                color: var(--tv-muted);
+            }
 
-        .no-results {
-            text-align: center;
-            color: #999;
-            padding: 40px;
-            font-size: 1.1rem;
+            .tavily-page .tv-score-bar {
+                flex: 0 0 120px;
+                height: 6px;
+                border-radius: 3px;
+                background: #e5e7eb;
+                overflow: hidden;
+            }
+
+            .tavily-page .tv-score-fill {
+                height: 100%;
+                background: var(--tv-accent);
+            }
+
+            /* Boş durum */
+            .tavily-page .tv-empty {
+                margin-top: 28px;
+                padding: 32px 20px;
+                text-align: center;
+                color: var(--tv-muted);
+                border: 1px dashed var(--tv-border);
+                border-radius: 10px;
+                background: var(--tv-surface);
+            }
+
+        @@media (max-width: 560px) {
+            .tavily-page .tv-search {
+                flex-direction: column;
+            }
+
+            .tavily-page .tv-btn {
+                width: 100%;
+            }
         }
     </style>
 
-    <div class="container">
-        <div class="header">
-            <h1>🔍 Tavily AI Arama Motoru</h1>
-            <p>Sorunuzu girin ve yapay zeka destekli arama sonuçlarını görün</p>
-        </div>
+    <div class="tavily-page">
+        <h1 class="tv-title">Web araştırması</h1>
+        <p class="tv-subtitle">Bir soru yazın. Tavily web'de arar, kaynaklardan kısa bir cevap hazırlar.</p>
 
-        <div class="search-box">
-            <form method="post">
-                @Html.AntiForgeryToken()
+        <form method="post" id="tavilyForm">
+            @Html.AntiForgeryToken()
 
-                @if (ViewBag.Error != null)
-                {
-                    <div class="error-box">
-                        @ViewBag.Error
-                    </div>
-                }
+            <div class="tv-search">
+                <input type="text"
+                       id="query"
+                       name="query"
+                       class="tv-input"
+                       placeholder="Örn: Yapay zeka destekli içerik üretimi SEO'ya zarar verir mi?"
+                       value="@ViewBag.Query"
+                       aria-label="Arama sorgusu"
+                       autofocus
+                       required />
+                <button type="submit" class="tv-btn" id="tavilyBtn">Ara</button>
+            </div>
+        </form>
 
-                <div class="form-group">
-                    <label for="query">Arama Sorgunuz:</label>
-                    <input type="text"
-                           id="query"
-                           name="query"
-                           class="form-control"
-                           placeholder="Örn: Yapay zekanın geleceği hakkında ne düşünüyorsun?"
-                           value="@ViewBag.Query"
-                           autofocus
-                           required />
-                </div>
-
-                <button type="submit" class="btn-search">🚀 Ara</button>
-            </form>
-        </div>
+        @if (ViewBag.Error != null)
+        {
+            <div class="tv-error" role="alert">@ViewBag.Error</div>
+        }
 
         @if (ViewBag.SearchCompleted == true)
         {
-            <div class="results-section">
-                <div class="answer-box">
-                    <h2>AI Cevabı</h2>
-                    <p>@ViewBag.Answer</p>
+            <section class="tv-answer" aria-label="Yapay zeka cevabı">
+                <h2>Cevap</h2>
+                <p>@ViewBag.Answer</p>
+            </section>
+
+            @if (results.Count > 0)
+            {
+                <div class="tv-sources-head">
+                    <h2>Kaynaklar</h2>
+                    <span>@results.Count sonuç</span>
                 </div>
 
-                @if (ViewBag.Results != null)
+                foreach (var result in results)
                 {
-                    var results = ViewBag.Results as List<TavilyResult>;
-                    if (results != null && results.Count > 0)
-                    {
-                        <h3 class="sources-title">📚 Kaynak ve Detaylar</h3>
+                    var percent = (int)Math.Round(result.Score * 100);
 
-                        @foreach (var result in results)
-                        {
-                            <div class="source-card">
-                                <h3>@result.Title</h3>
-                                <a href="@result.Url" target="_blank">@result.Url</a>
-                                <p>@result.Content</p>
-                                <span class="score-badge">Skor: @result.Score.ToString("F2")</span>
+                    <article class="tv-source">
+                        <div class="tv-source-host">@GetHost(result.Url)</div>
+                        <a class="tv-source-title" href="@result.Url" target="_blank" rel="noopener noreferrer">@result.Title</a>
+                        <p class="tv-source-text">@result.Content</p>
+                        <div class="tv-score">
+                            <span>İlgililik</span>
+                            <div class="tv-score-bar" role="presentation">
+                                <div class="tv-score-fill" style="width:@(percent)%"></div>
                             </div>
-                        }
-                    }
+                            <span>%@percent</span>
+                        </div>
+                    </article>
                 }
-                else
-                {
-                    <div class="no-results">
-                        <p>Kaynak bulunamadı.</p>
-                    </div>
-                }
-            </div>
+            }
+            else
+            {
+                <div class="tv-empty">Bu arama için kaynak bulunamadı. Sorguyu farklı kelimelerle yazmayı deneyin.</div>
+            }
+        }
+        else if (ViewBag.Error == null)
+        {
+            <div class="tv-empty">Sonuçlar burada görünecek.</div>
         }
     </div>
+
+    <script>
+        // Aranırken butonu kilitle: çift tıklamada gereksiz kredi harcanmasın
+        document.getElementById('tavilyForm').addEventListener('submit', function () {
+            var btn = document.getElementById('tavilyBtn');
+            btn.disabled = true;
+            btn.textContent = 'Aranıyor…';
+        });
+    </script>
 </main>
