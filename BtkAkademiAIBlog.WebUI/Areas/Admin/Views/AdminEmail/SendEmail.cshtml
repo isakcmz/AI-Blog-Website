@@ -1,0 +1,325 @@
+﻿
+@{
+    ViewData["Title"] = "SendEmail";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+
+<main class="page-content">
+
+    ﻿<!-- Email Gönderme Sayfası - Admin Panel İçeriği -->
+
+    <style>
+        .email-container {
+            padding: 0;
+            max-width: 100%;
+        }
+
+        .email-header {
+            margin-bottom: 32px;
+        }
+
+            .email-header h1 {
+                font-size: 28px;
+                font-weight: 700;
+                color: #1f2937;
+                margin-bottom: 8px;
+            }
+
+            .email-header p {
+                font-size: 15px;
+                color: #6b7280;
+            }
+
+        .email-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .email-form-group {
+            margin-bottom: 24px;
+        }
+
+        .email-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+        }
+
+            .email-label .required {
+                color: #ef4444;
+                margin-left: 2px;
+            }
+
+        .email-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1f2937;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+
+            .email-input:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+            .email-input:hover:not(:focus) {
+                border-color: #9ca3af;
+            }
+
+        .email-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #1f2937;
+            resize: vertical;
+            min-height: 180px;
+            font-family: inherit;
+            line-height: 1.6;
+            transition: all 0.2s ease;
+        }
+
+            .email-textarea:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+            .email-textarea:hover:not(:focus) {
+                border-color: #9ca3af;
+            }
+
+        .email-char-counter {
+            text-align: right;
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .email-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .email-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .email-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .email-btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+            .email-btn-primary:hover {
+                background: #2563eb;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            }
+
+            .email-btn-primary:active {
+                transform: translateY(0);
+            }
+
+        .email-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+            .email-btn-secondary:hover {
+                background: #e5e7eb;
+            }
+
+        .email-input-icon {
+            position: relative;
+        }
+
+            .email-input-icon input {
+                padding-left: 40px;
+            }
+
+            .email-input-icon .icon {
+                position: absolute;
+                left: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #9ca3af;
+                font-size: 16px;
+            }
+
+        .email-info-text {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+            .email-info-text svg {
+                width: 14px;
+                height: 14px;
+                flex-shrink: 0;
+            }
+
+        @@media (max-width: 768px) {
+            .email-card
+
+        {
+            padding: 24px;
+        }
+
+        .email-form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .email-buttons {
+            flex-direction: column;
+        }
+
+        .email-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        }
+    </style>
+
+    <div class="email-container">
+        <!-- Sayfa Başlığı -->
+        
+
+        <!-- Form Kartı -->
+        <div class="email-card">
+            <form id="emailForm" method="post" action="">
+                <!-- Ad Soyad ve Email (Yan Yana) -->
+                <div class="email-form-row">
+                    <div class="email-form-group">
+                        <label class="email-label" for="NameSurname">
+                            Ad Soyad <span class="required">*</span>
+                        </label>
+                        <div class="email-input-icon">
+                            <span class="icon">👤</span>
+                            <input type="text"
+                                   id="NameSurname"
+                                   name="NameSurname"
+                                   class="email-input"
+                                   placeholder="Örn: Ahmet Yılmaz">
+                        </div>
+                    </div>
+
+                    <div class="email-form-group">
+                        <label class="email-label" for="ReceiverMail">
+                            Alıcı Email <span class="required">*</span>
+                        </label>
+                        <div class="email-input-icon">
+                            <span class="icon">✉</span>
+                            <input type="email"
+                                   id="ReceiverMail"
+                                   name="ReceiverMail"
+                                   class="email-input"
+                                   placeholder="ornek@email.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konu -->
+                <div class="email-form-group">
+                    <label class="email-label" for="Subject">
+                        Konu <span class="required">*</span>
+                    </label>
+                    <div class="email-input-icon">
+                        <span class="icon">📋</span>
+                        <input type="text"
+                               id="Subject"
+                               name="Subject"
+                               class="email-input"
+                               placeholder="Email konusu">
+                    </div>
+                    <div class="email-info-text">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Alıcının göreceği email konusu</span>
+                    </div>
+                </div>
+
+                <!-- Mesaj -->
+                <div class="email-form-group">
+                    <label class="email-label" for="MessageDetail">
+                        Mesaj İçeriği <span class="required">*</span>
+                    </label>
+                    <textarea id="MessageDetail"
+                              name="MessageDetail"
+                              class="email-textarea"
+                              placeholder="Mesajınızı buraya yazın..."
+                              maxlength="2000"></textarea>
+                    <div class="email-char-counter">
+                        <span id="charCount">0</span> / 2000 karakter
+                    </div>
+                </div>
+
+                <!-- Butonlar -->
+                <div class="email-buttons">
+                    <button type="submit" class="email-btn email-btn-primary">
+                        <span>📤</span>
+                        <span>Gönder</span>
+                    </button>
+                    <button type="reset" class="email-btn email-btn-secondary">
+                        🔄 Formu Temizle
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Karakter sayacı
+            const messageDetail = document.getElementById('MessageDetail');
+            const charCount = document.getElementById('charCount');
+
+            messageDetail.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+
+            // Reset butonu için karakter sayacını sıfırla
+            const form = document.getElementById('emailForm');
+            form.addEventListener('reset', function() {
+                setTimeout(() => {
+                    charCount.textContent = '0';
+                }, 0);
+            });
+        })();
+    </script>
+
+</main>
+
