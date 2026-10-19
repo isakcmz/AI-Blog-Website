@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "SendMessage";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+
+
+<main class="page-content container mt-4">
+
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">📧 AI Destekli Mail Yanıtı Oluştur</h5>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text"
+                                   name="SenderNameSurname"
+                                   class="form-control"
+                                   placeholder="Örn: Murat Yücedağ" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">E-posta</label>
+                            <input type="email"
+                                   name="SenderEmail"
+                                   class="form-control"
+                                   placeholder="ornek@mail.com" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Konu</label>
+                            <input type="text"
+                                   name="MessageSubject"
+                                   class="form-control"
+                                   placeholder="Mail konusu" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mesaj</label>
+                            <textarea name="MessageDetail"
+                                      rows="10"
+                                      class="form-control"
+                                      placeholder="Kullanıcının gönderdiği mesaj..."></textarea>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary px-4">
+                                ✨ AI Yanıt Oluştur
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            @if (ViewBag.AIError != null)
+            {
+                <div class="alert alert-danger shadow-sm" role="alert">
+                    <h5 class="alert-heading">⚠️ API Hatası</h5>
+                    <p class="mb-0">@ViewBag.AIError</p>
+                </div>
+            }
+
+            @if (ViewBag.AIResponse != null)
+            {
+                <div class="card shadow-sm border-success">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">🤖 AI Tarafından Oluşturulan Yanıt</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="alert alert-light"
+                             style="white-space: pre-wrap; font-size: 15px;">
+                            @ViewBag.AIResponse
+                        </div>
+
+                        <div class="text-end">
+                            <button class="btn btn-outline-secondary btn-sm"
+                                    onclick="navigator.clipboard.writeText(`@ViewBag.AIResponse`)">
+                                📋 Kopyala
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</main>
+
