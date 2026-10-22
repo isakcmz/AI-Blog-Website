@@ -3,6 +3,7 @@ using BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos;
 using BtkAkademiAIBlog.WebApi.Dtos.CategoryDtos;
 using BtkAkademiAIBlog.WebApi.Dtos.CommentDtos;
 using BtkAkademiAIBlog.WebApi.Dtos.ContactDtos;
+using BtkAkademiAIBlog.WebApi.Dtos.SliderCarouselDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 
 namespace BtkAkademiAIBlog.WebApi.Mapping
@@ -56,6 +57,11 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
             CreateMap<Contact, CreateContactDto>().ReverseMap();
             CreateMap<Contact, UpdateContactDto>().ReverseMap();
             CreateMap<Contact, GetContactByIdDto>().ReverseMap();
+
+            CreateMap<SliderCarousel, ResultSliderCarouselDto>().ReverseMap();
+            CreateMap<SliderCarousel, CreateSliderCarouselDto>().ReverseMap();
+            CreateMap<SliderCarousel, UpdateSliderCarouselDto>().ReverseMap();
+            CreateMap<SliderCarousel, GetSliderCarouselByIdDto>().ReverseMap();
 
         }
     }

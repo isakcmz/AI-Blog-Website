@@ -326,6 +326,22 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("BtkAkademiAIBlog.WebApi.Entities.SliderCarousel", b =>
+                {
+                    b.Property<int>("SliderCarouselId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SliderCarouselId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SliderCarouselId");
+
+                    b.ToTable("SliderCarousels");
+                });
+
             modelBuilder.Entity("BtkAkademiAIBlog.WebApi.Entities.TradingVideo", b =>
                 {
                     b.Property<int>("TradingVideoId")
