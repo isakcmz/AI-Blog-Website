@@ -2,6 +2,7 @@
 using BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos;
 using BtkAkademiAIBlog.WebApi.Dtos.CategoryDtos;
 using BtkAkademiAIBlog.WebApi.Dtos.CommentDtos;
+using BtkAkademiAIBlog.WebApi.Dtos.ContactDtos;
 using BtkAkademiAIBlog.WebApi.Entities;
 
 namespace BtkAkademiAIBlog.WebApi.Mapping
@@ -49,6 +50,12 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Article.Title))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname));
+
+
+            CreateMap<Contact, ResultContactDto>().ReverseMap();
+            CreateMap<Contact, CreateContactDto>().ReverseMap();
+            CreateMap<Contact, UpdateContactDto>().ReverseMap();
+            CreateMap<Contact, GetContactByIdDto>().ReverseMap();
 
         }
     }

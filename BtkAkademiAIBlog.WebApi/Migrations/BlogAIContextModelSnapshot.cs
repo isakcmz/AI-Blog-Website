@@ -240,6 +240,9 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.Property<bool>("IsConfirm")
                         .HasColumnType("bit");
 
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("CommentId");
 
                     b.HasIndex("AppUserId");
@@ -258,6 +261,14 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactId"), 1L, 1);
 
                     b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description2")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
