@@ -1,0 +1,61 @@
+﻿﻿@{
+ViewData["Title"] = "CreateBlogWithGeminiOnMultiLanguage";
+Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<main class="page-content">
+
+    <h2>Gemini – Çok Dilli Blog İçerik</h2>
+
+    <form method="post">
+        <div class="mb-3">
+            <label>Hedef Dil</label>
+            <select name="targetLanguage" class="form-select">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Türkçe Başlık</label>
+            <input name="titleTr" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Türkçe İçerik</label>
+            <textarea name="contentTr" rows="8" class="form-control"></textarea>
+        </div>
+
+        <button class="btn btn-primary">Gemini ile Oluştur</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger mt-3">
+            <pre>@ViewBag.Error</pre>
+        </div>
+    }
+
+    @if (ViewBag.TitleOut != null)
+    {
+        <hr />
+        <h4>Çıktı</h4>
+
+        <label>Başlık</label>
+        <input class="form-control" value="@ViewBag.TitleOut" readonly />
+
+        <label class="mt-2">Meta Description</label>
+        <input class="form-control" value="@ViewBag.MetaOut" readonly />
+
+        <label class="mt-2">İçerik</label>
+        <textarea class="form-control" rows="10" readonly>@ViewBag.ContentOut</textarea>
+
+        <details class="mt-3">
+            <summary>Ham Model Çıktısı</summary>
+            <pre>@ViewBag.Raw</pre>
+        </details>
+    }
+
+</main>
