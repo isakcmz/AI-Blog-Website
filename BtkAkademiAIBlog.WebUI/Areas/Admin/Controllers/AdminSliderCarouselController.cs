@@ -78,7 +78,7 @@ namespace BtkAkademiAIBlog.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateSliderCarousel(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7017/api/Contacts/SliderCarousel?id={id}");
+            var responseMessage = await client.GetAsync($"https://localhost:7017/api/SliderCarousels/GetSliderCarousel?id={id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();

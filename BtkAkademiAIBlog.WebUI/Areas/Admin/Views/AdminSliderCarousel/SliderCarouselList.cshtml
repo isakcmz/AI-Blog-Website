@@ -21,7 +21,7 @@
                 <p class="page-description">Ana sayfada gösterilecek makale başlıklarını yönetin</p>
             </div>
         </div>
-        <a href="/Admin/SliderCarousel/Create" class="btn-add">
+            <a href="/Admin/AdminSliderCarousel/CreateSliderCarousel" class="btn-add">
             <i class="fas fa-plus"></i>
             Yeni Başlık Ekle
         </a>
@@ -84,11 +84,11 @@
                         </div>
                     </div>
                     <div class="slider-item-actions">
-                        <a href="/Admin/SliderCarousel/Update/@item.SliderCarouselId" class="btn-action edit" title="Düzenle">
+                            <a href="/Admin/AdminSliderCarousel/UpdateSliderCarousel/@item.SliderCarouselId" class="btn-action edit" title="Düzenle">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="/Admin/SliderCarousel/Delete/@item.SliderCarouselId" class="btn-action delete" 
-                           onclick="return confirm('Bu başlığı silmek istediğinizden emin misiniz?')" title="Sil">
+                            <a href="/Admin/AdminSliderCarousel/DeleteSliderCarousel/@item.SliderCarouselId" class="btn-action delete"
+                               onclick="return confirm('Bu başlığı silmek istediğinizden emin misiniz?')" title="Sil">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>

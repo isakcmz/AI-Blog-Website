@@ -1,8 +1,730 @@
-﻿
+﻿@model CreateSliderCarouselDto
+
+
 @{
     ViewData["Title"] = "CreateSliderCarousel";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<h1>CreateSliderCarousel</h1>
+
+<main class="page-content">
+
+<div class="create-slider-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="/Admin/SliderCarousel/Index">
+            <i class="fas fa-images"></i>
+            Slider Carousel
+        </a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Yeni Başlık Ekle</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="create-layout">
+        <!-- Form Section -->
+        <div class="form-container">
+            <div class="form-header">
+                <div class="header-icon">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div>
+                    <h1>Yeni Slider Başlığı Ekle</h1>
+                    <p>Ana sayfada gösterilecek makale başlığını girin</p>
+                </div>
+            </div>
+
+            <form method="post" class="slider-form">
+                <div class="form-card">
+                    <div class="card-icon-header">
+                        <div class="icon-circle">
+                            <i class="fas fa-heading"></i>
+                        </div>
+                        <div class="card-title-group">
+                            <h3>Başlık Bilgisi</h3>
+                            <p>Slider'da gösterilecek makale başlığını yazın</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description" class="form-label">
+                            <i class="fas fa-text-width"></i>
+                            Makale Başlığı
+                            <span class="required">*</span>
+                        </label>
+                        <textarea 
+                            asp-for="Description" 
+                            class="form-control" 
+                            rows="3" 
+                            placeholder="Örn: Yapay Zeka ve Makine Öğrenmesinin Geleceği"
+                            required
+                            maxlength="200"></textarea>
+                        <div class="form-helper">
+                            <span class="helper-text">
+                                <i class="fas fa-info-circle"></i>
+                                Kısa ve dikkat çekici bir başlık yazın
+                            </span>
+                            <span class="char-counter" id="charCounter">0 / 200</span>
+                        </div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="tips-box">
+                        <div class="tips-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <strong>İpuçları</strong>
+                        </div>
+                        <ul class="tips-list">
+                            <li><i class="fas fa-check"></i> Başlık 40-80 karakter arası olmalı</li>
+                            <li><i class="fas fa-check"></i> Açık ve anlaşılır olmalı</li>
+                            <li><i class="fas fa-check"></i> İlgi çekici kelimeler kullanın</li>
+                            <li><i class="fas fa-check"></i> Makale içeriğini yansıtmalı</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-save"></i>
+                        <span>Kaydet ve Yayınla</span>
+                    </button>
+                    <a href="/Admin/SliderCarousel/Index" class="btn-cancel">
+                        <i class="fas fa-times"></i>
+                        <span>İptal</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-container">
+            <div class="preview-sticky">
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <i class="fas fa-eye"></i>
+                        <h3>Canlı Önizleme</h3>
+                        <span class="live-badge">
+                            <span class="pulse"></span>
+                            LIVE
+                        </span>
+                    </div>
+
+                    <div class="preview-body">
+                        <!-- Desktop Preview -->
+                        <div class="device-preview desktop">
+                            <div class="device-header">
+                                <i class="fas fa-desktop"></i>
+                                <span>Masaüstü Görünüm</span>
+                            </div>
+                            <div class="device-screen">
+                                <div class="slider-preview">
+                                    <div class="preview-slide">
+                                        <div class="slide-number">1</div>
+                                        <p id="previewText" class="preview-title">
+                                            Başlığınız burada görünecek...
+                                        </p>
+                                    </div>
+                                    <div class="preview-dots">
+                                        <span class="preview-dot active"></span>
+                                        <span class="preview-dot"></span>
+                                        <span class="preview-dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Preview -->
+                        <div class="device-preview mobile">
+                            <div class="device-header">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobil Görünüm</span>
+                            </div>
+                            <div class="device-screen">
+                                <div class="slider-preview mobile">
+                                    <div class="preview-slide">
+                                        <p id="previewTextMobile" class="preview-title">
+                                            Başlığınız burada görünecek...
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div class="info-box">
+                        <div class="info-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="info-content">
+                            <strong>Otomatik Döngü</strong>
+                            <p>Eklenen başlıklar ana sayfada otomatik olarak döngüde gösterilir</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .create-slider-container {
+        padding: 2rem;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .breadcrumb a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+        color: #764ba2;
+    }
+
+    .breadcrumb i.fa-chevron-right {
+        color: #d1d5db;
+        font-size: 0.75rem;
+    }
+
+    .breadcrumb span {
+        color: #6b7280;
+    }
+
+    /* Layout */
+    .create-layout {
+        display: grid;
+        grid-template-columns: 1fr 450px;
+        gap: 2rem;
+    }
+
+    /* Form Container */
+    .form-container {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid #f3f4f6;
+    }
+
+    .header-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+    }
+
+    .header-icon i {
+        font-size: 1.75rem;
+        color: white;
+    }
+
+    .form-header h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 0.25rem 0;
+    }
+
+    .form-header p {
+        color: #6b7280;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    /* Form Card */
+    .form-card {
+        background: #f9fafb;
+        border-radius: 0.75rem;
+        padding: 1.75rem;
+        border: 2px solid #e5e7eb;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-icon-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-circle i {
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .card-title-group h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #1f2937;
+        font-weight: 700;
+    }
+
+    .card-title-group p {
+        margin: 0.25rem 0 0 0;
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    /* Form Group */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+    }
+
+    .form-label i {
+        color: #667eea;
+    }
+
+    .required {
+        color: #ef4444;
+        font-weight: 700;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 0.75rem;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        background: white;
+        resize: vertical;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-helper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.75rem;
+    }
+
+    .helper-text {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    .helper-text i {
+        color: #3b82f6;
+    }
+
+    .char-counter {
+        font-size: 0.875rem;
+        color: #9ca3af;
+        font-weight: 600;
+    }
+
+    /* Tips Box */
+    .tips-box {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #fbbf24;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-top: 1.5rem;
+    }
+
+    .tips-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #92400e;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    .tips-header i {
+        font-size: 1.25rem;
+    }
+
+    .tips-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+    }
+
+    .tips-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        color: #78350f;
+        font-size: 0.9rem;
+    }
+
+    .tips-list i {
+        color: #059669;
+        font-size: 0.875rem;
+    }
+
+    /* Form Actions */
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-submit {
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.75rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(102, 126, 234, 0.25);
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(102, 126, 234, 0.35);
+    }
+
+    .btn-cancel {
+        flex: 1;
+        background: white;
+        color: #6b7280;
+        border: 2px solid #e5e7eb;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+    }
+
+    /* Preview Container */
+    .preview-container {
+        position: relative;
+    }
+
+    .preview-sticky {
+        position: sticky;
+        top: 2rem;
+    }
+
+    .preview-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .preview-header {
+        background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: white;
+    }
+
+    .preview-header i {
+        font-size: 1.25rem;
+    }
+
+    .preview-header h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        flex: 1;
+    }
+
+    .live-badge {
+        background: #ef4444;
+        padding: 0.375rem 0.875rem;
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .pulse {
+        width: 8px;
+        height: 8px;
+        background: white;
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @@keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+
+    .preview-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    /* Device Preview */
+    .device-preview {
+        background: #f9fafb;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        border: 2px solid #e5e7eb;
+    }
+
+    .device-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        color: #6b7280;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .device-screen {
+        background: white;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider-preview {
+        text-align: center;
+    }
+
+    .preview-slide {
+        position: relative;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .slide-number {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        width: 28px;
+        height: 28px;
+        background: #667eea;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.875rem;
+    }
+
+    .preview-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+        line-height: 1.6;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .device-preview.mobile .preview-title {
+        font-size: 1rem;
+        min-height: 50px;
+    }
+
+    .preview-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .preview-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #d1d5db;
+    }
+
+    .preview-dot.active {
+        background: #667eea;
+        width: 24px;
+        border-radius: 4px;
+    }
+
+    /* Info Box */
+    .info-box {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        border: 2px solid #3b82f6;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        margin-top: 1.5rem;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        background: #3b82f6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .info-icon i {
+        color: white;
+        font-size: 1.25rem;
+    }
+
+    .info-content strong {
+        display: block;
+        color: #1e40af;
+        margin-bottom: 0.25rem;
+        font-size: 1rem;
+    }
+
+    .info-content p {
+        margin: 0;
+        color: #1e3a8a;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    /* Responsive */
+    @@media (max-width: 1024px) {
+        .create-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .preview-container {
+            order: -1;
+        }
+
+        .preview-sticky {
+            position: static;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .create-slider-container {
+            padding: 1rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .preview-body {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<script>
+    // Character counter and live preview
+    document.addEventListener('DOMContentLoaded', function() {
+        const textarea = document.querySelector('textarea[name="Description"]');
+        const charCounter = document.getElementById('charCounter');
+        const previewText = document.getElementById('previewText');
+        const previewTextMobile = document.getElementById('previewTextMobile');
+
+        textarea.addEventListener('input', function() {
+            const length = this.value.length;
+            charCounter.textContent = length + ' / 200';
+            
+            // Update color based on length
+            if (length > 180) {
+                charCounter.style.color = '#ef4444';
+            } else if (length > 150) {
+                charCounter.style.color = '#f59e0b';
+            } else {
+                charCounter.style.color = '#9ca3af';
+            }
+
+            // Live preview
+            const text = this.value.trim() || 'Başlığınız burada görünecek...';
+            previewText.textContent = text;
+            previewTextMobile.textContent = text;
+        });
+    });
+</script>
+
+
+</main>
 
