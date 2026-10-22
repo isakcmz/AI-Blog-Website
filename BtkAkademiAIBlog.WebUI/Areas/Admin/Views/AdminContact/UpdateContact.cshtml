@@ -1,8 +1,568 @@
-﻿
+﻿@model GetContactByIdDto
+
 @{
     ViewData["Title"] = "UpdateContact";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<h1>UpdateContact</h1>
+
+
+<main class="page-content">
+
+    <div class="create-contact-container">
+        <!-- Header -->
+        <div class="page-header-create">
+            <a href="/Admin/AdminContact/ContactList" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Geri Dön
+            </a>
+            <h1 class="create-title">
+                <i class="fas fa-plus-circle"></i>
+                İletişim Bilgisini Güncelle
+            </h1>
+        </div>
+
+        <!-- Split Layout -->
+        <div class="split-layout">
+            <!-- Form Section (Left) -->
+            <div class="form-section">
+                <form method="post" class="contact-form">
+                    <input type="hidden" asp-for="ContactId" />
+                    <!-- Phone Numbers Card -->
+                    <div class="form-card">
+                        <div class="card-header">
+                            <div class="card-icon phone-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h3>Telefon Bilgileri</h3>
+                                <p>İletişim telefon numaralarını girin</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber1">Telefon Numarası 1 <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input asp-for="PhoneNumber1" class="form-control" placeholder="Örn: +90 (555) 123 45 67" required />
+                            </div>
+                            <span asp-validation-for="PhoneNumber1" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber2">Telefon Numarası 2</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input asp-for="PhoneNumber2" class="form-control" placeholder="Alternatif telefon (opsiyonel)" />
+                            </div>
+                            <span asp-validation-for="PhoneNumber2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Email Card -->
+                    <div class="form-card">
+                        <div class="card-header">
+                            <div class="card-icon email-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3>E-posta Bilgileri</h3>
+                                <p>İletişim e-posta adreslerini girin</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email1">E-posta Adresi 1 <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input asp-for="Email1" type="email" class="form-control" placeholder="ornek@sirket.com" required />
+                            </div>
+                            <span asp-validation-for="Email1" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email2">E-posta Adresi 2</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input asp-for="Email2" type="email" class="form-control" placeholder="Alternatif e-posta (opsiyonel)" />
+                            </div>
+                            <span asp-validation-for="Email2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Address Card -->
+                    <div class="form-card">
+                        <div class="card-header">
+                            <div class="card-icon address-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h3>Adres Bilgileri</h3>
+                                <p>Fiziksel adres ve konum bilgileri</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Address">Adres <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-map-marker-alt input-icon"></i>
+                                <textarea asp-for="Address" class="form-control textarea" rows="3" placeholder="Tam adres bilgisini girin" required></textarea>
+                            </div>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MapLocation">Harita Konumu (URL)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-globe input-icon"></i>
+                                <input asp-for="MapLocation" type="url" class="form-control" placeholder="Google Maps bağlantısı" />
+                            </div>
+                            <span asp-validation-for="MapLocation" class="text-danger"></span>
+                            <small class="form-hint">Google Maps'ten konum bağlantısını kopyalayabilirsiniz</small>
+                        </div>
+                    </div>
+
+                    <!-- Descriptions Card -->
+                    <div class="form-card">
+                        <div class="card-header">
+                            <div class="card-icon info-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div>
+                                <h3>Açıklamalar</h3>
+                                <p>Ek bilgiler ve notlar</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description1">Açıklama 1</label>
+                            <textarea asp-for="Description1" class="form-control textarea" rows="3" placeholder="Çalışma saatleri, özel notlar vb."></textarea>
+                            <span asp-validation-for="Description1" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description2">Açıklama 2</label>
+                            <textarea asp-for="Description2" class="form-control textarea" rows="3" placeholder="Ek açıklamalar (opsiyonel)"></textarea>
+                            <span asp-validation-for="Description2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-save"></i>
+                            Kaydet
+                        </button>
+                        <a href="/Contact/Index" class="btn-cancel">
+                            <i class="fas fa-times"></i>
+                            İptal
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Preview Section (Right) -->
+            <div class="preview-section">
+                <div class="preview-sticky">
+                    <div class="preview-header">
+                        <i class="fas fa-eye"></i>
+                        <h3>Önizleme</h3>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-card">
+                            <div class="preview-icon-large">
+                                <i class="fas fa-address-card"></i>
+                            </div>
+                            <h4>İletişim Kartı Önizlemesi</h4>
+                            <p>Formda girilen bilgiler burada önizlenecektir.</p>
+
+                            <div class="preview-tips">
+                                <div class="tip-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Tüm zorunlu alanları doldurun</span>
+                                </div>
+                                <div class="tip-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>E-posta formatına dikkat edin</span>
+                                </div>
+                                <div class="tip-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Telefon numarası doğru formatta olsun</span>
+                                </div>
+                                <div class="tip-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Sistem sadece 1 iletişim kaydı tutar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .create-contact-container {
+            max-width: 1400px;
+        }
+
+        /* Header */
+        .page-header-create {
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+            .back-button:hover {
+                color: #3b82f6;
+            }
+
+        .create-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0;
+        }
+
+            .create-title i {
+                color: #3b82f6;
+            }
+
+        /* Split Layout */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        /* Form Section */
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.3s ease;
+        }
+
+            .form-card:hover {
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.12);
+            }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .phone-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .email-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .address-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .info-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .card-header p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group:last-child {
+                margin-bottom: 0;
+            }
+
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                color: #374151;
+                margin-bottom: 0.5rem;
+                font-size: 0.95rem;
+            }
+
+        .required {
+            color: #ef4444;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+            .form-control:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+        .textarea {
+            resize: vertical;
+            min-height: 100px;
+            padding: 0.75rem 1rem;
+        }
+
+        .form-hint {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* Action Buttons */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-submit {
+            flex: 1;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+        }
+
+            .btn-submit:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+            }
+
+        .btn-cancel {
+            flex: 1;
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+            .btn-cancel:hover {
+                background: #f9fafb;
+                border-color: #d1d5db;
+            }
+
+        /* Preview Section */
+        .preview-section {
+            position: relative;
+        }
+
+        .preview-sticky {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .preview-header {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 1.25rem;
+            border-radius: 1rem 1rem 0 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+            .preview-header i {
+                color: #3b82f6;
+                font-size: 1.25rem;
+            }
+
+            .preview-header h3 {
+                margin: 0;
+                font-size: 1.15rem;
+                color: #1f2937;
+                font-weight: 700;
+            }
+
+        .preview-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-card {
+            text-align: center;
+        }
+
+        .preview-icon-large {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .preview-icon-large i {
+                font-size: 2.5rem;
+                color: #3b82f6;
+            }
+
+        .preview-card h4 {
+            font-size: 1.25rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-card p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-tips {
+            background: #f9fafb;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+            .tip-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .tip-item:first-child {
+                padding-top: 0;
+            }
+
+            .tip-item i {
+                color: #10b981;
+                font-size: 1.1rem;
+            }
+
+                .tip-item i.fa-info-circle {
+                    color: #3b82f6;
+                }
+
+            .tip-item span {
+                color: #4b5563;
+                font-size: 0.95rem;
+                text-align: left;
+            }
+
+        /* Responsive Design */
+        @@media (max-width: 1024px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-section {
+                order: -1;
+            }
+
+            .preview-sticky {
+                position: static;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .create-contact-container {
+                padding: 1rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+</main>
+
+
 
