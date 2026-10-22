@@ -1,0 +1,448 @@
+﻿@model List<ResultContactDto>
+
+@{
+    ViewData["Title"] = "ContactList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+
+<main class="page-content">
+
+<div class="contact-management-container">
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-text">
+                <h1 class="page-title">
+                    <i class="fas fa-address-book"></i>
+                    İletişim Bilgileri Yönetimi
+                </h1>
+                <p class="page-subtitle">Sistemdeki iletişim bilgilerini görüntüleyin ve düzenleyin</p>
+            </div>
+            @if (Model == null)
+            {
+                <a href="/Contact/CreateContact" class="btn-primary-action">
+                    <i class="fas fa-plus-circle"></i>
+                    İletişim Bilgisi Ekle
+                </a>
+            }
+        </div>
+    </div>
+
+    <!-- Contact Information Card -->
+    @if (Model.Count > 0)
+    {
+        @foreach(var item in Model)
+            {
+                <div class="contact-info-card">
+                    <!-- Card Header -->
+                    <div class="card-header-section">
+                        <div class="header-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Aktif İletişim Bilgisi</span>
+                        </div>
+                        <a href="/Contact/UpdateContact/@item.ContactId" class="btn-edit">
+                            <i class="fas fa-edit"></i>
+                            Düzenle
+                        </a>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body-grid">
+                        <!-- Contact Methods Section -->
+                        <div class="info-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-phone"></i>
+                                Telefon Bilgileri
+                            </h3>
+                            <div class="info-items">
+                                <div class="info-item">
+                                    <span class="label">Telefon 1:</span>
+                                    <span class="value">@item.PhoneNumber1</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(item.PhoneNumber2))
+                                {
+                                    <div class="info-item">
+                                        <span class="label">Telefon 2:</span>
+                                        <span class="value">@item.PhoneNumber2</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="info-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-envelope"></i>
+                                E-posta Bilgileri
+                            </h3>
+                            <div class="info-items">
+                                <div class="info-item">
+                                    <span class="label">E-posta 1:</span>
+                                    <span class="value">@item.Email1</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(item.Email2))
+                                {
+                                    <div class="info-item">
+                                        <span class="label">E-posta 2:</span>
+                                        <span class="value">@item.Email2</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="info-section full-width">
+                            <h3 class="section-title">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Adres Bilgileri
+                            </h3>
+                            <div class="info-items">
+                                <div class="info-item">
+                                    <span class="label">Adres:</span>
+                                    <span class="value">@item.Address</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(item.MapLocation))
+                                {
+                                    <div class="info-item">
+                                        <span class="label">Harita Konumu:</span>
+                                        <a href="@item.MapLocation" target="_blank" class="map-link">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            Haritada Görüntüle
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(item.Description1) || !string.IsNullOrEmpty(item.Description2))
+                        {
+                            <div class="info-section full-width">
+                                <h3 class="section-title">
+                                    <i class="fas fa-info-circle"></i>
+                                    Açıklamalar
+                                </h3>
+                                <div class="info-items">
+                                    @if (!string.IsNullOrEmpty(item.Description1))
+                                    {
+                                        <div class="description-box">
+                                            <p>@item.Description1</p>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(item.Description2))
+                                    {
+                                        <div class="description-box">
+                                            <p>@item.Description2</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            
+    }
+    else
+    {
+        <!-- Empty State -->
+        <div class="empty-state">
+            <div class="empty-state-content">
+                <div class="empty-icon">
+                    <i class="fas fa-address-book"></i>
+                </div>
+                <h2>Henüz İletişim Bilgisi Yok</h2>
+                <p>Sistemde kayıtlı iletişim bilgisi bulunmamaktadır. Lütfen yeni bir iletişim bilgisi ekleyin.</p>
+                <a href="/Admin/AdminContact/CreateContact" class="btn-primary-large">
+                    <i class="fas fa-plus-circle"></i>
+                    İlk İletişim Bilgisini Ekle
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .contact-management-container {
+        max-width: 1200px;
+    }
+
+    /* Header Styles */
+    .page-header {
+        margin-bottom: 2rem;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .page-title i {
+        color: #3b82f6;
+    }
+
+    .page-subtitle {
+        color: #6b7280;
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    /* Button Styles */
+    .btn-primary-action {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-primary-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-edit {
+        background: white;
+        color: #3b82f6;
+        border: 2px solid #3b82f6;
+        padding: 0.6rem 1.25rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Contact Info Card */
+    .contact-info-card {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .card-header-section {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #d1d5db;
+    }
+
+    .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #10b981;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .card-body-grid {
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .info-section {
+        background: #f9fafb;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        border: 1px solid #e5e7eb;
+    }
+
+    .info-section.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #374151;
+        margin: 0 0 1rem 0;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .section-title i {
+        color: #3b82f6;
+    }
+
+    .info-items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .info-item .label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .info-item .value {
+        font-size: 1rem;
+        color: #1f2937;
+        font-weight: 500;
+    }
+
+    .map-link {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    .map-link:hover {
+        color: #2563eb;
+    }
+
+    .description-box {
+        background: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border-left: 4px solid #3b82f6;
+    }
+
+    .description-box p {
+        margin: 0;
+        color: #4b5563;
+        line-height: 1.6;
+    }
+
+    /* Empty State */
+    .empty-state {
+        background: white;
+        border-radius: 1rem;
+        padding: 4rem 2rem;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .empty-icon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1.5rem;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .empty-icon i {
+        font-size: 3.5rem;
+        color: #3b82f6;
+    }
+
+    .empty-state h2 {
+        font-size: 1.75rem;
+        color: #1f2937;
+        margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+        color: #6b7280;
+        font-size: 1.05rem;
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-primary-large {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-primary-large:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        .contact-management-container {
+            padding: 1rem;
+        }
+
+        .header-content {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .card-body-grid {
+            grid-template-columns: 1fr;
+            padding: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>﻿
+
+</main>
+
+
+
+
+
+
+
