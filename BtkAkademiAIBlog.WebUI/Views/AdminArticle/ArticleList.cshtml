@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "ArticleList";
     Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
 }
 
 <style>
@@ -16,6 +17,7 @@
         gap: 6px;
         transition: all .2s ease;
         white-space: nowrap;
+        text-decoration: none;
     }
 
     .btn-delete {
@@ -24,9 +26,9 @@
         border: 1px solid #f5c6cb;
     }
 
-    .btn-delete:hover {
-        background-color: #f5c6cb;
-    }
+        .btn-delete:hover {
+            background-color: #f5c6cb;
+        }
 
     .btn-edit {
         background-color: #e6f4ea;
@@ -34,9 +36,9 @@
         border: 1px solid #b7dfc2;
     }
 
-    .btn-edit:hover {
-        background-color: #b7dfc2;
-    }
+        .btn-edit:hover {
+            background-color: #b7dfc2;
+        }
 
     .btn-view {
         background-color: #fff7e6;
@@ -44,9 +46,31 @@
         border: 1px solid #ffe0b2;
     }
 
-    .btn-view:hover {
-        background-color: #ffe0b2;
+        .btn-view:hover {
+            background-color: #ffe0b2;
+        }
+
+    /* Aktif Yap butonu - Mavi */
+    .btn-activate {
+        background-color: #e3f2fd;
+        color: #1565c0;
+        border: 1px solid #90caf9;
     }
+
+        .btn-activate:hover {
+            background-color: #bbdefb;
+        }
+
+    /* Pasif Yap butonu - Turuncu */
+    .btn-deactivate {
+        background-color: #fff3e0;
+        color: #e65100;
+        border: 1px solid #ffcc80;
+    }
+
+        .btn-deactivate:hover {
+            background-color: #ffe0b2;
+        }
 
     .table-hover tbody tr:hover {
         background-color: #f8f9fa;
@@ -105,6 +129,7 @@
                             <th>Tarih</th>
                             <th>Kategori</th>
                             <th>Yazar</th>
+                            <th>Feature Slider</th>
                             <th>Sil</th>
                             <th>Güncelle</th>
                             <th>Sitede Gör</th>
@@ -114,11 +139,13 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            count++;
+
                             <tr>
                                 <td>@item.ArticleId</td>
 
                                 <td>
-                                    <strong>@item.Title</strong>
+                                    <strong>@count</strong>
                                 </td>
 
                                 <td class="text-muted">
@@ -128,9 +155,8 @@
 
                                 <td>
                                     <span class="badge-category">
-                                        <i class="
-                                            bi
-                                            @(item.CategoryName switch
+                                        <i class="bi
+                                                @(item.CategoryName switch
                                            {
                                                "Teknoloji" => "bi-cpu",
                                                "Spor" => "bi-dribbble",
@@ -143,15 +169,31 @@
                                                "Seyahat" => "bi-plane",
                                                _ => "bi-folder2-open"
                                            })
-                                        me-1"></i>
-
-                                        @item.CategoryName
-                                    </span>
-                                </td>
+                                            me-1"></i>
+                                    @item.CategoryName
+                                </span>
+                            </td>
 
                                 <td>
                                     <i class="bi bi-person-circle me-1"></i>
                                     @item.Name @item.Surname
+                                </td>
+
+                                <td>
+                                @if (item.IsFeatureSlider)
+                                    {
+                                        <a href="/AdminArticle/ChangeArticleIsFeatureSliderFromTrueToFalse/@item.ArticleId"
+                                           class="action-btn btn-deactivate">
+                                            <i class="bi bi-eye-slash-fill"></i> Pasif Yap
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/AdminArticle/ChangeArticleIsFeatureSliderFromFalseToTrue/@item.ArticleId"
+                                           class="action-btn btn-activate">
+                                            <i class="bi bi-eye-fill"></i> Aktif Yap
+                                        </a>
+                                    }
                                 </td>
 
                                 <td>

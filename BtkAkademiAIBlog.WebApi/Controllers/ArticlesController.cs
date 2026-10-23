@@ -78,6 +78,9 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
 
 
+
+
+
         [HttpGet("GetArticlesFeatureSliderByTrue")]
         public IActionResult GetArticlesFeatureSliderByTrue()
         {
@@ -89,6 +92,27 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(_mapper.Map<List<ResultArticleWithCategoryDto>>(values));
         }
 
+
+
+
+        [HttpGet("ChangeIsFeatureSliderFromTrueToFalse")]
+        public IActionResult ChangeIsFeatureSliderFromTrueToFalse(int id)
+        {
+            var value = _context.Articles.Find(id);
+            value.IsFeatureSlider = false;
+            _context.SaveChanges();
+            return Ok("Değişiklikler kaydedildi");
+        }
+
+
+        [HttpGet("ChangeIsFeatureSliderFromFalseToTrue")]
+        public IActionResult ChangeIsFeatureSliderFromFalseToTrue(int id)
+        {
+            var value = _context.Articles.Find(id);
+            value.IsFeatureSlider = true;
+            _context.SaveChanges();
+            return Ok("Değişiklikler kaydedildi");
+        }
 
 
 

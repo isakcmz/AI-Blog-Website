@@ -135,6 +135,34 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
 
+        [HttpGet]
+        public async Task<IActionResult> ChangeArticleIsFeatureSliderFromTrueToFalse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7017/api/Articles/ChangeIsFeatureSliderFromTrueToFalse?id={id}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ArticleList");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeArticleIsFeatureSliderFromFalseToTrue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7017/api/Articles/ChangeIsFeatureSliderFromFalseToTrue?id={id}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ArticleList");
+            }
+            return View();
+        }
+
+
+
+
+
 
 
 
