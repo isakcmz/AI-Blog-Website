@@ -1,0 +1,19 @@
+﻿@model List<ResultCategoryDto>
+
+
+<div class="back-title back-small-title">
+    <h2>Kategoriler</h2>
+</div>
+<ul class="back-category-area">
+    
+    @foreach(var item in Model)
+    {
+        <li>
+            <div>
+                <img src="@item.CategoryImageUrl" alt="Cagegory Image">
+                <a href="#"><span> @item.CategoryName </span></a>
+            </div>
+        </li>
+    }
+    
+</ul>

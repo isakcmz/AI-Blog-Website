@@ -83,47 +83,9 @@
                 </div>
             </div>
             <div class="col-lg-4 pl-30">
-                <div class="back-title back-small-title">
-                    <h2>Categories</h2>
-                </div>
-                <ul class="back-category-area">
-                    <li>
-                        <div>
-                            <img src="/template/assets/images/category/1.jpg" alt="Cagegory Image">
-                            <a href="#"><span><em>10</em> Travel</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img src="/template/assets/images/category/2.jpg" alt="Cagegory Image">
-                            <a href="#"><span> <em>19</em> Technology</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img src="/template/assets/images/category/3.jpg" alt="Cagegory Image">
-                            <a href="#"><span> <em>15</em> Food</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img src="/template/assets/images/category/4.jpg" alt="Cagegory Image">
-                            <a href="#"><span> <em>20</em> Fashion</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img src="/template/assets/images/category/5.jpg" alt="Cagegory Image">
-                            <a href="#"><span> <em>22</em> Life Style</span></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img src="/template/assets/images/category/6.jpg" alt="Cagegory Image">
-                            <a href="#"><span> <em>18</em> Adventure</span></a>
-                        </div>
-                    </li>
-                </ul>
+
+                @await Component.InvokeAsync("_DefaultCategoriesComponentPartial")
+                
                 <div class="back-title back-small-title pt-30">
                     <h2>Daha Fazlası</h2>
                 </div>

@@ -8,5 +8,7 @@
         public List<Article> Articles { get; set; }
 
         public List<TradingVideo> TradingVideos { get; set; }
+
+        public string? CategoryImageUrl { get; set; }
     }
 }
