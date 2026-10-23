@@ -28,5 +28,9 @@
 
         public List<Comment> Comments { get; set; }
 
+        public bool FeaturedCoverImageUrlStatus { get; set; }
+        public string? FeaturedCoverImageUrl { get; set; }
+
+
     }
 }

@@ -23,5 +23,8 @@ namespace BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos
 
         public string Name { get; set; }
         public string Surname { get; set; }
+
+        public bool FeaturedCoverImageUrlStatus { get; set; }
+        public string? FeaturedCoverImageUrl { get; set; }
     }
 }

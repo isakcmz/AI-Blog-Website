@@ -229,7 +229,9 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                     MainImageUrl = a.MainImageUrl,
                     Name = a.AppUser.Name,
                     Surname = a.AppUser.Surname,
-                    SliderCategoryImageUrl = a.SliderCategoryImageUrl
+                    SliderCategoryImageUrl = a.SliderCategoryImageUrl,
+                    FeaturedCoverImageUrl = a.FeaturedCoverImageUrl,
+                    FeaturedCoverImageUrlStatus = a.FeaturedCoverImageUrlStatus
 
                 }).ToList();
 
