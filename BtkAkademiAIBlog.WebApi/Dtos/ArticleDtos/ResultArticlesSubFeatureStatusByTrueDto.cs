@@ -21,6 +21,7 @@
 
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string UserImageUrl { get; set; }
 
         public bool IsLastArticle { get; set; }
         public string? LastArticleImageUrl { get; set; }

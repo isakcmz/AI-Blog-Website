@@ -323,6 +323,7 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                     MainImageUrl = a.MainImageUrl,
                     Name = a.AppUser.Name,
                     Surname = a.AppUser.Surname,
+                    UserImageUrl = a.AppUser.ImageUrl,
                     SliderCategoryImageUrl = a.SliderCategoryImageUrl,
                     IsLastArticle = a.IsLastArticle,
                     LastArticleImageUrl = a.LastArticleImageUrl,
