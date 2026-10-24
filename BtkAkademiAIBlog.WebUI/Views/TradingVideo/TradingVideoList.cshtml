@@ -3,61 +3,261 @@
 @{
     ViewData["Title"] = "TradingVideoList";
     Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
 }
 
 
 
+<style>
+    .video-dashboard {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        color: white;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+    .video-stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+    .stat-item {
+        background: rgba(255,255,255,0.2);
+        padding: 1rem;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+    }
+    .video-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    .video-table {
+        border-collapse: separate;
+        border-spacing: 0 12px;
+    }
+    .video-table thead th {
+        background: #f8fafc;
+        color: #64748b;
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+    .video-table tbody tr {
+        background: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .video-table tbody tr:hover {
+        transform: translateX(4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .video-table td {
+        padding: 1.25rem;
+        vertical-align: middle;
+        border: none;
+    }
+    .video-title {
+        font-weight: 600;
+        color: #1e293b;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .video-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.25rem;
+    }
+    .video-id {
+        font-family: 'Courier New', monospace;
+        font-size: 0.75rem;
+        color: #94a3b8;
+        background: #f1f5f9;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+    }
+    .date-badge {
+        background: #e0e7ff;
+        color: #4f46e5;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+    .action-btn {
+        padding: 0.625rem 1.25rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .btn-delete { background: #ef4444; color: white; }
+    .btn-delete:hover { background: #dc2626; }
+    .btn-update { background: #10b981; color: white; }
+    .btn-update:hover { background: #059669; }
+    .btn-youtube { 
+        background: #ff0000; 
+        color: white;
+    }
+    .btn-youtube:hover { background: #cc0000; }
+    .btn-add-video {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        border: none;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1rem;
+    }
+    .btn-add-video:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    }
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #94a3b8;
+    }
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
 <main class="page-content">
-    <!--breadcrumb-->
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Videolu Makaleler</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item">
-                        <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Video İçerikleri Listesi</li>
-                </ol>
-            </nav>
+    <!-- Dashboard Header -->
+    <div class="video-dashboard">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h3 class="mb-2">🎬 Video İçerik Yönetimi</h3>
+                <p class="mb-0 opacity-90">Blogunuzdaki video içeriklerini yönetin</p>
+            </div>
+            <a href="/TradingVideo/CreateTradingVideo/" class="btn-add-video">
+                <i class='bx bx-plus-circle'></i> Yeni Video Ekle
+            </a>
         </div>
-    </div>
-    <!--end breadcrumb-->
-
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive mt-3">
-                <table class="table align-middle">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>#</th>
-                            <th>Başlık</th>
-                            <th>Oluşturma Tarihi</th>
-                            <th>Sil</th>
-                            <th>Güncelle</th>
-                            <th>Youtube'da Gör</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.TradingVideoId</td>
-                                <td>@item.Title</td>
-                                <td>@item.CreatedDate.ToString("dd-MMM-yyyy")</td>
-                                <td><a href="/TradingVideo/DeleteTradingVideo/@item.TradingVideoId" class="btn btn-danger"> Sil </a></td>
-                                <td><a href="/TradingVideo/UpdateTradingVideo/@item.TradingVideoId" class="btn btn-success"> Güncelle </a></td>
-                                <td><a href="/TradingVideo/YoutubeTradingVideo/@item.TradingVideoId" class="btn btn-warning"> Youtube'da Gör </a></td>
-                            </tr>
-                        }
-
-                    </tbody>
-                </table>
-                <a href="/TradingVideo/CreateTradingVideo/" class="btn btn-info"> Yeni Video Ekle </a>
+        <div class="video-stats">
+            <div class="stat-item">
+                <div style="font-size: 0.875rem; opacity: 0.9;">Toplam Video</div>
+                <div style="font-size: 1.75rem; font-weight: 700; margin-top: 0.25rem;">@Model.Count</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-size: 0.875rem; opacity: 0.9;">Son Eklenen</div>
+                <div style="font-size: 1rem; font-weight: 600; margin-top: 0.25rem;">
+                    @(Model.Any() ? Model.Max(x => x.CreatedDate).ToString("dd MMM yyyy") : "Henüz yok")
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Video List Card -->
+    <div class="card video-card">
+        <div class="card-body p-0">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table video-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>^#</th>
+                                <th>Video Başlığı</th>
+                                <th>Tarih</th>
+                                <th class="text-end">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+
+                                <tr>
+                                    <td>
+                                        <span class="video-id">@count</span>
+                                    </td>
+                                    <td>
+                                        <div class="video-title">
+                                            <div class="video-icon">
+                                                <i class='bx bxl-youtube'></i>
+                                            </div>
+                                            <span>@item.Title</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="date-badge">
+                                            <i class='bx bx-calendar'></i>
+                                            @item.CreatedDate.ToString("dd MMM yyyy")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="/TradingVideo/YoutubeDetailTradingVideo/@item.TradingVideoId/" 
+                                               class="action-btn btn-youtube" 
+                                               title="YouTube'da İzle">
+                                                <i class='bx bxl-youtube'></i> İzle
+                                            </a>
+                                            <a href="/TradingVideo/UpdateTradingVideo/@item.TradingVideoId/" 
+                                               class="action-btn btn-update" 
+                                               title="Düzenle">
+                                                <i class='bx bx-edit'></i>
+                                            </a>
+                                            <a href="/TradingVideo/DeleteTradingVideo/@item.TradingVideoId/" 
+                                               class="action-btn btn-delete" 
+                                               onclick="return confirm('Bu videoyu silmek istediğinize emin misiniz?')"
+                                               title="Sil">
+                                                <i class='bx bx-trash'></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class='bx bx-video-off'></i>
+                    <h5>Henüz video eklenmemiş</h5>
+                    <p>İlk videonuzu ekleyerek başlayın</p>
+                    <a href="/TradingVideo/CreateTradingVideo/" class="btn-add-video mt-3">
+                        <i class='bx bx-plus-circle'></i> İlk Videoyu Ekle
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
 </main>
 

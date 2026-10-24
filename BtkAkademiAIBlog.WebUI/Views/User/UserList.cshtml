@@ -3,64 +3,120 @@
 @{
     ViewData["Title"] = "UserList";
     Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
 }
 
 
-<main class="page-content">
-    <!--breadcrumb-->
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Kullanıcılar</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item">
-                        <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Kullanıcı Listesi</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!--end breadcrumb-->
+<style>
+    .modern-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .modern-table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+    .modern-table tbody tr {
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+    .modern-table tbody tr:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .modern-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        border: none;
+    }
+    .modern-table thead th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+    .action-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        border: none;
+    }
+    .action-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .btn-delete { background: #ef4444; color: white; }
+    .btn-update { background: #10b981; color: white; }
+    .btn-details { background: #f59e0b; color: white; }
+    .btn-create { 
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    .user-id {
+        font-family: 'Courier New', monospace;
+        font-size: 0.75rem;
+        color: #6b7280;
+    }
+</style>
 
-    <div class="card">
+<main class="page-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-0">👥 Kullanıcı Yönetimi</h4>
+            <small class="text-muted">Toplam @Model.Count kullanıcı</small>
+        </div>
+        <a href="/User/CreateUser/" class="btn btn-create">
+            <i class="bx bx-plus"></i> Yeni Kullanıcı
+        </a>
+    </div>
+
+    <div class="card modern-card">
         <div class="card-body">
-            <div class="table-responsive mt-3">
-                <table class="table align-middle">
-                    <thead class="table-secondary">
+            <div class="table-responsive">
+                <table class="table modern-table">
+                    <thead>
                         <tr>
                             <th>#</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
-                            <th>Ünvan</th>
+                            <th>Ad Soyad</th>
+                            <th>Unvan</th>
                             <th>Email</th>
-                            <th>Sil</th>
-                            <th>Güncelle</th>
-                            <th>Detaylar</th>
+                            <th class="text-center">İşlemler</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach (var item in Model)
                         {
+                            count++;
+
                             <tr>
-                                <td>@item.Id</td>
-                                <td>@item.Name</td>
-                                <td>@item.Surname</td>
-                                <td>@item.Title</td>
+                                <td>@count</td>
+                                <td><strong>@item.Name @item.Surname</strong></td>
+                                <td><span class="badge bg-light text-dark">@item.Title</span></td>
                                 <td>@item.Email</td>
-                                <td><a href="/User/DeleteUser/@item.Id" class="btn btn-danger"> Sil </a></td>
-                                <td><a href="/User/DeleteUser/@item.Id" class="btn btn-success"> Güncelle </a></td>
-                                <td><a href="/User/DeleteUser/@item.Id" class="btn btn-warning"> Detaylar </a></td>
+                                <td class="text-center">
+                                    <div class="btn-group gap-2" role="group">
+                                        <a href="/User/UpdateUser/@item.Id/" class="action-btn btn-update">Güncelle</a>
+                                        <a href="/User/UserDetails/@item.Id/" class="action-btn btn-details">Detaylar</a>
+                                        <a href="/User/DeleteUser/@item.Id/" class="action-btn btn-delete" onclick="return confirm('Silmek istediğinize emin misiniz?')">Sil</a>
+                                    </div>
+                                </td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
-                <a href="/User/CreateUser/" class="btn btn-info"> Yeni Kullanıcı Ekle </a>
             </div>
         </div>
     </div>
-
 </main>
 
