@@ -294,5 +294,23 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
             return Ok(values);
         }
+
+
+
+
+
+
+        [HttpGet("GetArticlesSubFeatureStatusByTrue")]
+        public IActionResult GetArticlesSubFeatureStatusByTrue()
+        {
+            var values = _context.Articles
+                .Where(x => x.SubFeatureStatus == true)
+                .Include(y => y.Category)
+                .Include(z => z.AppUser)
+                .ToList();
+
+            return Ok(values);
+        }
+
     }
 }

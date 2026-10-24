@@ -187,6 +187,12 @@ namespace BtkAkademiAIBlog.WebApi.Migrations
                     b.Property<string>("SliderCategoryImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SubFeatureImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SubFeatureStatus")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

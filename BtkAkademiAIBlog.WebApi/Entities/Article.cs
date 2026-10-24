@@ -31,6 +31,9 @@
         public bool FeaturedCoverImageUrlStatus { get; set; }
         public string? FeaturedCoverImageUrl { get; set; }
 
+        public bool SubFeatureStatus { get; set; }
+        public string? SubFeatureImageUrl { get; set; }
+
 
     }
 }
