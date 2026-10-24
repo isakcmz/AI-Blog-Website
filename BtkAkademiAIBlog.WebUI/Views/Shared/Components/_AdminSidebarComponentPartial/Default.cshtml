@@ -40,6 +40,10 @@
             <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Videolar">
                 <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-videos" type="button"><i class="bi bi-award-fill"></i></button>
             </li>
+            <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="ChatBot">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-chatbot" type="button"><i class="bi bi-cloud-arrow-down-fill"></i></button>
+            </li>
+
         </ul>
     </div>
     <div class="textmenu">
@@ -195,11 +199,21 @@
                 <div class="list-group list-group-flush">
                     <div class="list-group-item">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-0">Pages</h5>
+                            <h5 class="mb-0">Videolar</h5>
                         </div>
-                        <small class="mb-0">Some placeholder content</small>
                     </div>
                     <a href="/TradingVideo/TradingVideoList/" class="list-group-item"><i class="bi bi-alarm"></i>Video Listesi</a>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-chatbot">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-0">ChatBot</h5>
+                        </div>
+                    </div>
+                    <a href="/Admin/AdminChat/SendChatWithAI/" class="list-group-item"><i class="bi bi-chat-dots"></i> Groq ChatBot </a>
                 </div>
             </div>
 
