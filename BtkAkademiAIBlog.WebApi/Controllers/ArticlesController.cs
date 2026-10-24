@@ -307,7 +307,29 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                 .Where(x => x.SubFeatureStatus == true)
                 .Include(y => y.Category)
                 .Include(z => z.AppUser)
-                .ToList();
+                .Select(a => new ResultArticlesSubFeatureStatusByTrueDto
+                {
+                    ArticleId = a.ArticleId,
+                    CategoryId = a.CategoryId,
+                    Title = a.Title,
+                    CreatedDate = a.CreatedDate,
+                    CategoryName = a.Category.CategoryName,
+                    Content = a.Content,
+                    CoverImageUrl = a.CoverImageUrl,
+                    FeatureImageUrl = a.FeatureImageUrl,
+                    FeatureSliderImageUrl = a.FeatureSliderImageUrl,
+                    IsFeatureSlider = a.IsFeatureSlider,
+                    IsTrendingStories = a.IsTrendingStories,
+                    MainImageUrl = a.MainImageUrl,
+                    Name = a.AppUser.Name,
+                    Surname = a.AppUser.Surname,
+                    SliderCategoryImageUrl = a.SliderCategoryImageUrl,
+                    IsLastArticle = a.IsLastArticle,
+                    LastArticleImageUrl = a.LastArticleImageUrl,
+                    SubFeatureImageUrl = a.SubFeatureImageUrl,
+                    SubFeatureStatus = a.SubFeatureStatus
+
+                }).ToList();
 
             return Ok(values);
         }
