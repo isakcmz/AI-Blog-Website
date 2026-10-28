@@ -1,4 +1,6 @@
-﻿namespace BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos
+﻿using BtkAkademiAIBlog.WebApi.Entities;
+
+namespace BtkAkademiAIBlog.WebApi.Dtos.ArticleDtos
 {
     public class GetArticleByIdDto
     {
@@ -9,6 +11,25 @@
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
+
+        public bool IsFeatureSlider { get; set; }
+        public string? FeatureSliderImageUrl { get; set; }
+        public string? FeatureImageUrl { get; set; }
+
+        public string? AppUserId { get; set; }
+
+        public string? SliderCategoryImageUrl { get; set; }
+        public bool IsTrendingStories { get; set; }
+        public bool IsLastArticle { get; set; }
+        public string? LastArticleImageUrl { get; set; }
+
+        public string? Image300x300Url { get; set; }
+
+        public bool FeaturedCoverImageUrlStatus { get; set; }
+        public string? FeaturedCoverImageUrl { get; set; }
+
+        public bool SubFeatureStatus { get; set; }
+        public string? SubFeatureImageUrl { get; set; }
     }
 }

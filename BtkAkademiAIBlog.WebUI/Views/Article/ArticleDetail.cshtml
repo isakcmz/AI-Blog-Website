@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "ArticleDetail";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+
+<div class="back-wrapper">
+
+
+    @await Component.InvokeAsync("_ArticleDetailBreadCrumbComponentPartial", new { id = ViewBag.i })
+ 
+
+    <div class="back__blog__area back-blog-page back-blog-page-single pt-70 pb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-single-inner">
+                        <div class="blog-content">
+
+                            @await Component.InvokeAsync("_ArticleDetailContentComponentPartial")
+                            
+                            @await Component.InvokeAsync("_ArticleDetailTagComponentPartial")
+
+                            @await Component.InvokeAsync("_ArticleDetailAuthorComponentPartial")
+
+                            @await Component.InvokeAsync("_ArticleDetailPreviousAndNextPostComponentPartial")
+                            
+                            @await Component.InvokeAsync("_ArticleDetailRelatedPostComponentPartial")
+
+                            @await Component.InvokeAsync("_ArticleDetailCommentComponentPartial")
+                            
+                            @await Component.InvokeAsync("_ArticleDetailAddCommentComponentPartial")
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="back-sidebar pl-30 md-pl-0 back-hero-area back-latest-posts back-whats-posts">
+
+                        @await Component.InvokeAsync("_ArticleDetailSearchAreaComponentPartial")
+
+                        @await Component.InvokeAsync("_ArticleDetailSocialMediaComponentPartial")
+
+                        @await Component.InvokeAsync("_ArticleDetailLatestPostComponentPartial")
+                        
+                        @await Component.InvokeAsync("_ArticleDetailInstagramComponentPartial")
+
+                        @await Component.InvokeAsync("_ArticleDetailLastCommentComponentPartial")
+
+                        @await Component.InvokeAsync("_ArticleDetailAllTagsComponentPartial")
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

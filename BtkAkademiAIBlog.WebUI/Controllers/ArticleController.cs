@@ -13,10 +13,6 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public IActionResult ArticleDetail()
-        {
-            return View();
-        }
 
 
         public async Task<IActionResult> ArticleList(int page=1)
@@ -49,8 +45,9 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
 
-        public IActionResult ArticleListByCategory()
+        public IActionResult ArticleDetail(int id)
         {
+            ViewBag.i = id;
             return View();
         }
     }

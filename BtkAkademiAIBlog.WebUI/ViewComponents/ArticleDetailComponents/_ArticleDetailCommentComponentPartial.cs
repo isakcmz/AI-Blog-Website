@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace BtkAkademiAIBlog.WebUI.ViewComponents.BlogDetailComponents
+namespace BtkAkademiAIBlog.WebUI.ViewComponents.ArticleDetailComponents
 {
-    public class _BlogDetailCommentComponentPartial : ViewComponent
+    public class _ArticleDetailCommentComponentPartial : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
