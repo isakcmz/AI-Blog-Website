@@ -19,5 +19,20 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public string ImageUrl { get; set; }
+
+        public string? AppUserId { get; set; }
+
+        public string? SliderCategoryImageUrl { get; set; }
+        public bool IsTrendingStories { get; set; }
+        public bool IsLastArticle { get; set; }
+        public string? LastArticleImageUrl { get; set; }
+
+        public string? Image300x300Url { get; set; }
+
+        public bool FeaturedCoverImageUrlStatus { get; set; }
+        public string? FeaturedCoverImageUrl { get; set; }
+
+        public bool SubFeatureStatus { get; set; }
+        public string? SubFeatureImageUrl { get; set; }
     }
 }
