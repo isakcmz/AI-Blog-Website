@@ -9,6 +9,7 @@
 
 <div class="back-wrapper">
 
+    <!-- Breadcrumb -->
     <div class="back-breadcrumbs">
         <div class="breadcrumbs-wrap">
             <div class="breadcrumbs-inner">
@@ -17,7 +18,7 @@
                         <h1 class="breadcrumbs-title">Makale Listesi</h1>
                         <div class="back-nav">
                             <ul>
-                                <li><a href="/Default/Index">Ana Sayfa</a></li>
+                                <li><a href="/Default/Index/">Ana Sayfa</a></li>
                                 <li>Tüm Makaleler</li>
                             </ul>
                         </div>
@@ -27,37 +28,95 @@
         </div>
     </div>
 
+    <!-- Article List -->
     <div class="back-category-style-grid pt-70 pb-70">
         <div class="container">
             <div class="row">
-                @foreach(var item in Model)
+
+                @foreach (var item in Model)
                 {
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mb-30">
                         <div class="image-areas">
-                            <a href="#"><img src="@item.CoverImageUrl" alt="image" style="width:600px; height:250px;"></a>
+                            <a href="#">
+                                <img src="@item.CoverImageUrl"
+                                     alt="image"
+                                     style="width:100%;height:250px;object-fit:cover;">
+                            </a>
                         </div>
+
                         <div class="back-btm-content">
                             <a href="#" class="back-cates">@item.CategoryName</a>
-                            <h3><a href="#">@item.Title</a></h3>
+
+                            <h3>
+                                <a href="#">@item.Title</a>
+                            </h3>
+
                             <ul>
-                                <li class="back-author">Yazar: <a href="#"> Adı Soyadı </a></li>
-                                <li class="back-date"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>@item.CreatedDate.ToString("dd-MM-yyyy")</li>
+                                <li class="back-author">
+                                    Yazar: <a href="#">Adı Soyadı</a>
+                                </li>
+                                <li class="back-date">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                    </span>
+                                    @item.CreatedDate.ToString("dd MMM yyyy")
+                                </li>
                             </ul>
-                            <p>@item.Content.Substring(0,70)...</p>
-                        </div>
+
+                            <p>
+                                @(item.Content.Length > 70
+                                                            ? item.Content.Substring(0, 70) + "..."
+                                                            : item.Content)
+                        </p>
                     </div>
-                }
+                </div>
+                                }
+
             </div>
 
-            <!--================= Back Pagination Start Here =================-->
-            <ul class="back-pagination mt-30">
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li class="back-next"><a href="#">Sonraki<i class="arrow_carrot-right"></i></a></li>
+            <!-- Pagination -->
+            <ul class="back-pagination mt-40">
+
+                @if (ViewBag.CurrentPage > 1)
+                {
+                    <li class="back-next">
+                        <a href="/Article/ArticleList?page=@(ViewBag.CurrentPage - 1)">
+                            Önceki
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="@(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a href="/Article/ArticleList?page=@i">@i</a>
+                    </li>
+                }
+
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                {
+                    <li class="back-next">
+                        <a href="/Article/ArticleList?page=@(ViewBag.CurrentPage + 1)">
+                            Sonraki
+                        </a>
+                    </li>
+                }
+
             </ul>
-            <!--================= Back Pagination End Here =================-->
+
         </div>
     </div>
-    <!--================= Back Trending Stories End Here =================-->
-</div>  
+</div>
+
+<style>
+    .back-pagination li.active a {
+        background-color: #ff3d00;
+        color: #fff;
+        border-radius: 4px;
+    }
+</style>

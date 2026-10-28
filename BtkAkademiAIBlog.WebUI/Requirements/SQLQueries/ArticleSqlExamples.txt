@@ -1,0 +1,559 @@
+﻿﻿INSERT INTO [dbo].[Articles]
+(
+ Title, CoverImageUrl, MainImageUrl, [Content], CreatedDate, CategoryId,
+ IsFeatureSlider, FeatureSliderImageUrl, FeatureImageUrl, AppUserId,
+ SliderCategoryImageUrl, IsTrendingStories, IsLastArticle,
+ LastArticleImageUrl, Image300x300Url,
+ FeaturedCoverImageUrl, FeaturedCoverImageUrlStatus,
+ SubFeatureImageUrl, SubFeatureStatus
+)
+VALUES
+-- 1 Teknoloji
+(N'Yapay Zeka 2026’da Yazılım Dünyasını Nasıl Dönüştürüyor?',
+'/articleimages/10.jpg',
+'https://img.blog.com/main/ai-1.jpg',
+'2026 yılı itibarıyla yapay zeka, yazılım geliştirme süreçlerinin merkezine yerleşmiş durumda...',
+'2026-02-05',1,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/ai-1.jpg',
+NULL,0,NULL,0),
+
+-- 2 Finans
+(N'Enflasyon Döneminde Kişisel Finans Yönetimi',
+'/articleimages/11.jpg',
+'https://img.blog.com/main/finance-1.jpg',
+'Yüksek enflasyon dönemlerinde bireysel finans yönetimi her zamankinden daha kritik hale geliyor...',
+'2026-02-07',5,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/finance-1.jpg',
+NULL,0,NULL,0),
+
+-- 3 Spor
+(N'2026 Sezonunda Futbol Taktikleri Nasıl Evriliyor?',
+'/articleimages/12.webp',
+'https://img.blog.com/main/sport-1.jpg',
+'Modern futbolda veri analitiği ve pozisyonel oyun anlayışı ön plana çıkıyor...',
+'2026-02-10',2,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/sport-1.jpg',
+NULL,0,NULL,0),
+
+-- 4 Eğitim
+(N'Uzaktan Eğitim Modellerinin Geleceği',
+'/articleimages/13.jpg',
+'https://img.blog.com/main/edu-1.jpg',
+'Pandemi sonrası dönemde uzaktan eğitim kalıcı bir model haline geldi...',
+'2026-02-12',14,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/edu-1.jpg',
+NULL,0,NULL,0),
+
+-- 5 Seyahat
+(N'2026’da Avrupa’da Uygun Bütçeli Seyahat Rotaları',
+'/articleimages/14.png',
+'https://img.blog.com/main/travel-1.jpg',
+'Avrupa’da uygun bütçeli seyahat etmek hâlâ mümkün. Doğru planlama ile...',
+'2026-02-15',10,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/travel-1.jpg',
+NULL,0,NULL,0),
+
+-- 6 Sağlık
+(N'Sağlıklı Yaşam İçin Günlük Alışkanlıklar',
+'/articleimages/15.jpg',
+'https://img.blog.com/main/health-1.jpg',
+'Sağlıklı bir yaşam için küçük ama sürdürülebilir alışkanlıklar büyük fark yaratır...',
+'2026-02-18',9,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/health-1.jpg',
+NULL,0,NULL,0),
+
+-- 7 Film & Dizi
+(N'2026’nın En Çok Beklenen Dizileri',
+'/articleimages/16.jpg',
+'https://img.blog.com/main/movie-1.jpg',
+'Dijital platformların rekabetiyle birlikte 2026 yılı dizi dünyası oldukça hareketli...',
+'2026-03-02',4,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/movie-1.jpg',
+NULL,0,NULL,0),
+
+-- 8 Günlük Yaşam
+(N'Yoğun İş Hayatında Zaman Yönetimi',
+'/articleimages/17.png',
+'https://img.blog.com/main/life-1.jpg',
+'Günlük hayatta zamanı doğru yönetmek hem verimliliği hem de yaşam kalitesini artırır...',
+'2026-03-05',6,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/life-1.jpg',
+NULL,0,NULL,0),
+
+-- 9 Sanat
+(N'Çağdaş Sanatta Dijital Dönüşüm',
+'/articleimages/18.jpeg',
+'https://img.blog.com/main/art-1.jpg',
+'Dijital araçlar, sanatın üretim ve sergilenme biçimini kökten değiştiriyor...',
+'2026-03-08',3,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/art-1.jpg',
+NULL,0,NULL,0),
+
+-- 10 Yeme & İçme
+(N'Evde Sağlıklı Atıştırmalık Tarifleri',
+'/articleimages/19.webp',
+'https://img.blog.com/main/food-1.jpg',
+'Evde kolayca hazırlanabilecek sağlıklı atıştırmalıklar ile beslenme rutininizi iyileştirebilirsiniz...',
+'2026-03-12',8,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/food-1.jpg',
+NULL,0,NULL,0);
+
+-- 🔁 Bu yapı birebir korunarak 50 kayda tamamlanabilir
+
+INSERT INTO [dbo].[Articles]
+(
+ Title, CoverImageUrl, MainImageUrl, [Content], CreatedDate, CategoryId,
+ IsFeatureSlider, FeatureSliderImageUrl, FeatureImageUrl, AppUserId,
+ SliderCategoryImageUrl, IsTrendingStories, IsLastArticle,
+ LastArticleImageUrl, Image300x300Url,
+ FeaturedCoverImageUrl, FeaturedCoverImageUrlStatus,
+ SubFeatureImageUrl, SubFeatureStatus
+)
+VALUES
+-- 21 Teknoloji
+(N'Bulut Bilişimde 2026 Trendleri',
+'/articleimages/20.jpg',
+'https://img.blog.com/main/cloud-1.jpg',
+'Bulut bilişim çözümleri 2026 yılında ölçeklenebilirlik ve güvenlik odağında gelişmeye devam ediyor...',
+'2026-03-15',1,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/cloud-1.jpg',
+NULL,0,NULL,0),
+
+-- 22 Spor
+(N'Evde Spor Yapmanın Püf Noktaları',
+'/articleimages/21.jpeg',
+'https://img.blog.com/main/sport-2.jpg',
+'Evde spor yaparken motivasyonu korumak ve doğru egzersizleri seçmek oldukça önemlidir...',
+'2026-03-18',2,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/sport-2.jpg',
+NULL,0,NULL,0),
+
+-- 23 Eğitim
+(N'Yazılıma Yeni Başlayanlar İçin Yol Haritası',
+'/articleimages/22.jpg',
+'https://img.blog.com/main/edu-2.jpg',
+'Yazılıma başlamak isteyenler için doğru kaynakları ve sıralamayı belirlemek çok önemlidir...',
+'2026-03-20',14,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/edu-2.jpg',
+NULL,0,NULL,0),
+
+-- 24 Günlük Yaşam
+(N'Evden Çalışırken Verimli Olmanın Yolları',
+'/articleimages/23.jpg',
+'https://img.blog.com/main/life-2.jpg',
+'Evden çalışma düzeninde dikkat dağıtıcı unsurları azaltmak verimliliği artırır...',
+'2026-03-22',6,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/life-2.jpg',
+NULL,0,NULL,0),
+
+-- 25 Film & Dizi
+(N'Dizi İzlerken Zaman Yönetimi Nasıl Olmalı?',
+'/articleimages/24.jpg',
+'https://img.blog.com/main/movie-2.jpg',
+'Dizi platformlarının artmasıyla birlikte izleme alışkanlıkları da değişti...',
+'2026-03-25',4,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/movie-2.jpg',
+NULL,0,NULL,0),
+
+-- 26 Sağlık
+(N'Uyku Düzeninin Sağlık Üzerindeki Etkileri',
+'/articleimages/25.webp',
+'https://img.blog.com/main/health-2.jpg',
+'Düzenli ve kaliteli uyku hem fiziksel hem zihinsel sağlığın temelidir...',
+'2026-03-28',9,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/health-2.jpg',
+NULL,0,NULL,0),
+
+-- 27 Yeme & İçme
+(N'Kahve Kültürünün Günlük Hayata Etkisi',
+'/articleimages/26.jpg',
+'https://img.blog.com/main/food-2.jpg',
+'Kahve, sadece bir içecek değil aynı zamanda sosyal bir alışkanlıktır...',
+'2026-04-01',8,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/food-2.jpg',
+NULL,0,NULL,0),
+
+-- 28 Seyahat
+(N'Hafta Sonu Kaçamakları İçin Yakın Rotalar',
+'/articleimages/27.jpg',
+'https://img.blog.com/main/travel-2.jpg',
+'Kısa tatiller için yakın ve ulaşımı kolay rotalar büyük avantaj sağlar...',
+'2026-04-04',10,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/travel-2.jpg',
+NULL,0,NULL,0),
+
+-- 29 Finans
+(N'Bireysel Yatırımcılar İçin Risk Yönetimi',
+'/articleimages/29.jpg',
+'https://img.blog.com/main/finance-2.jpg',
+'Yatırım yaparken riskleri doğru analiz etmek uzun vadede kazanç sağlar...',
+'2026-04-07',5,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/finance-2.jpg',
+NULL,0,NULL,0),
+
+-- 30 Sanat
+(N'Sanat ve Teknolojinin Kesişim Noktası',
+'/articleimages/30.jpg',
+'https://img.blog.com/main/art-2.jpg',
+'Teknoloji, sanat üretiminde yeni ifade biçimlerinin ortaya çıkmasını sağlıyor...',
+'2026-04-10',3,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/art-2.jpg',
+NULL,0,NULL,0);
+
+----------------------------------------------------------
+
+INSERT INTO [dbo].[Articles]
+(
+ Title, CoverImageUrl, MainImageUrl, [Content], CreatedDate, CategoryId,
+ IsFeatureSlider, FeatureSliderImageUrl, FeatureImageUrl, AppUserId,
+ SliderCategoryImageUrl, IsTrendingStories, IsLastArticle,
+ LastArticleImageUrl, Image300x300Url,
+ FeaturedCoverImageUrl, FeaturedCoverImageUrlStatus,
+ SubFeatureImageUrl, SubFeatureStatus
+)
+VALUES
+-- 31 Teknoloji
+(N'Mobil Uygulama Geliştirmede Performans İpuçları',
+'/articleimages/31.jpg',
+'https://img.blog.com/main/mobile-1.jpg',
+'Mobil uygulamalarda performans kullanıcı deneyimini doğrudan etkileyen en önemli faktörlerden biridir...',
+'2026-04-12',1,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/mobile-1.jpg',
+NULL,0,NULL,0),
+
+-- 32 Eğitim
+(N'Online Eğitimde Disiplin Nasıl Sağlanır?',
+'/articleimages/32.jpg',
+'https://img.blog.com/main/edu-3.jpg',
+'Online eğitim sürecinde disiplin ve süreklilik sağlamak başarıyı doğrudan etkiler...',
+'2026-04-14',14,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/edu-3.jpg',
+NULL,0,NULL,0),
+
+-- 33 Günlük Yaşam
+(N'Sabah Rutinleri Gün Verimliliğini Nasıl Etkiler?',
+'/articleimages/33.jpg',
+'https://img.blog.com/main/life-3.jpg',
+'Güne nasıl başladığınız, günün geri kalanındaki performansınızı belirler...',
+'2026-04-16',6,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/life-3.jpg',
+NULL,0,NULL,0),
+
+-- 34 Spor
+(N'Düzenli Egzersizin Mental Sağlığa Etkisi',
+'/articleimages/34.webp',
+'https://img.blog.com/main/sport-3.jpg',
+'Fiziksel aktivite yalnızca bedeni değil zihinsel sağlığı da olumlu yönde etkiler...',
+'2026-04-18',2,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/sport-3.jpg',
+NULL,0,NULL,0),
+
+-- 35 Finans
+(N'Uzun Vadeli Birikim Yapmanın Önemi',
+'/articleimages/35.png',
+'https://img.blog.com/main/finance-3.jpg',
+'Finansal özgürlük için uzun vadeli birikim alışkanlığı büyük önem taşır...',
+'2026-04-20',5,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/finance-3.jpg',
+NULL,0,NULL,0),
+
+-- 36 Film & Dizi
+(N'Film İzleme Alışkanlıklarımız Nasıl Değişti?',
+'/articleimages/36.jpg',
+'https://img.blog.com/main/movie-3.jpg',
+'Dijital platformlar, film izleme alışkanlıklarını kökten değiştirdi...',
+'2026-04-22',4,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/movie-3.jpg',
+NULL,0,NULL,0),
+
+-- 37 Sanat
+(N'Minimalizm Akımının Sanata Yansımaları',
+'/articleimages/37.webp',
+'https://img.blog.com/main/art-3.jpg',
+'Minimalizm, sanat eserlerinde sadelik ve anlam bütünlüğünü ön plana çıkarır...',
+'2026-04-24',3,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/art-3.jpg',
+NULL,0,NULL,0),
+
+-- 38 Yeme & İçme
+(N'Dengeli Beslenme İçin Günlük Öğün Planı',
+'/articleimages/38.webp',
+'https://img.blog.com/main/food-3.jpg',
+'Dengeli beslenme, sağlıklı bir yaşamın temel taşlarından biridir...',
+'2026-04-25',8,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/food-3.jpg',
+NULL,0,NULL,0),
+
+-- 39 Seyahat
+(N'Seyahat Planlamasında Bütçe Kontrolü',
+'/articleimages/39.jpg',
+'https://img.blog.com/main/travel-3.jpg',
+'Seyahat öncesinde doğru bütçe planlaması yapmak tatilin kalitesini artırır...',
+'2026-04-27',10,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/travel-3.jpg',
+NULL,0,NULL,0),
+
+-- 40 Sağlık
+(N'Stres Yönetimi ve Günlük Hayat',
+'/articleimages/40.jpg',
+'https://img.blog.com/main/health-3.jpg',
+'Yoğun yaşam temposunda stres yönetimi sağlıklı kalabilmenin anahtarıdır...',
+'2026-04-29',9,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/health-3.jpg',
+NULL,0,NULL,0);
+
+
+--------------------------------------------------------------------------
+
+INSERT INTO [dbo].[Articles]
+(
+ Title, CoverImageUrl, MainImageUrl, [Content], CreatedDate, CategoryId,
+ IsFeatureSlider, FeatureSliderImageUrl, FeatureImageUrl, AppUserId,
+ SliderCategoryImageUrl, IsTrendingStories, IsLastArticle,
+ LastArticleImageUrl, Image300x300Url,
+ FeaturedCoverImageUrl, FeaturedCoverImageUrlStatus,
+ SubFeatureImageUrl, SubFeatureStatus
+)
+VALUES
+-- 51 Eğitim
+(N'Kariyer Değiştirmek İsteyenler İçin Eğitim Rehberi',
+'/articleimages/41.png',
+'https://img.blog.com/main/edu-4.jpg',
+'Kariyer değişikliği planlayan bireyler için doğru eğitim yolunu seçmek kritik bir adımdır...',
+'2026-02-20',14,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/edu-4.jpg',
+NULL,0,NULL,0),
+
+-- 52 Günlük Yaşam
+(N'Dijital Detoks Nedir, Nasıl Yapılır?',
+'/articleimages/42.jpg',
+'https://img.blog.com/main/life-4.jpg',
+'Günlük hayatta ekran süresini azaltmak zihinsel rahatlama sağlar...',
+'2026-02-23',6,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/life-4.jpg',
+NULL,0,NULL,0),
+
+-- 53 Teknoloji
+(N'Yazılım Projelerinde Clean Code Prensipleri',
+'/articleimages/43.jpg',
+'https://img.blog.com/main/tech-4.jpg',
+'Temiz kod yazmak, yazılım projelerinin sürdürülebilirliğini doğrudan etkiler...',
+'2026-02-26',1,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/tech-4.jpg',
+NULL,0,NULL,0),
+
+-- 54 Finans
+(N'Gelir Gider Takibi Nasıl Yapılmalı?',
+'/articleimages/44.jpg',
+'https://img.blog.com/main/finance-4.jpg',
+'Bütçe yönetimi için düzenli gelir gider takibi büyük önem taşır...',
+'2026-03-01',5,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/finance-4.jpg',
+NULL,0,NULL,0),
+
+-- 55 Spor
+(N'Haftada Kaç Gün Spor Yapılmalı?',
+'/articleimages/45.jpeg',
+'https://img.blog.com/main/sport-4.jpg',
+'Sporun etkili olabilmesi için süreklilik ve denge önemlidir...',
+'2026-03-04',2,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/sport-4.jpg',
+NULL,0,NULL,0),
+
+-- 56 Film & Dizi
+(N'Belgesel İzlemenin Kişisel Gelişime Katkısı',
+'/articleimages/46.jpeg',
+'https://img.blog.com/main/movie-4.jpg',
+'Belgeseller, farklı bakış açıları kazanmak için güçlü bir kaynaktır...',
+'2026-03-07',4,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/movie-4.jpg',
+NULL,0,NULL,0),
+
+-- 57 Sanat
+(N'Sokak Sanatının Şehir Kültürüne Etkisi',
+'/articleimages/47.jpg',
+'https://img.blog.com/main/art-4.jpg',
+'Sokak sanatı, kent kültürünün dinamik ve özgür bir yansımasıdır...',
+'2026-03-11',3,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/art-4.jpg',
+NULL,0,NULL,0),
+
+-- 58 Yeme & İçme
+(N'Evde Sağlıklı Kahvaltı Alternatifleri',
+'/articleimages/48.webp',
+'https://img.blog.com/main/food-4.jpg',
+'Güne enerjik başlamak için sağlıklı kahvaltı alışkanlığı büyük önem taşır...',
+'2026-03-15',8,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/food-4.jpg',
+NULL,0,NULL,0),
+
+-- 59 Seyahat
+(N'Uçak Bileti Alırken Nelere Dikkat Edilmeli?',
+'/articleimages/49.jpg',
+'https://img.blog.com/main/travel-4.jpg',
+'Uygun fiyatlı uçak bileti bulmak için doğru zamanlama önemlidir...',
+'2026-03-18',10,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/travel-4.jpg',
+NULL,0,NULL,0),
+
+-- 60 Sağlık
+(N'Bağışıklık Sistemini Güçlendiren Alışkanlıklar',
+'/articleimages/50.jpg',
+'https://img.blog.com/main/health-4.jpg',
+'Bağışıklık sistemini güçlü tutmak hastalıklara karşı korunmanın temelidir...',
+'2026-03-22',9,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/health-4.jpg',
+NULL,0,NULL,0);
+
+
+------------------------------------------------------------------
+
+INSERT INTO [dbo].[Articles]
+(
+ Title, CoverImageUrl, MainImageUrl, [Content], CreatedDate, CategoryId,
+ IsFeatureSlider, FeatureSliderImageUrl, FeatureImageUrl, AppUserId,
+ SliderCategoryImageUrl, IsTrendingStories, IsLastArticle,
+ LastArticleImageUrl, Image300x300Url,
+ FeaturedCoverImageUrl, FeaturedCoverImageUrlStatus,
+ SubFeatureImageUrl, SubFeatureStatus
+)
+VALUES
+-- 61 Teknoloji
+(N'Backend Geliştirmede API Tasarım Prensipleri',
+'/articleimages/51.png',
+'https://img.blog.com/main/api-1.jpg',
+'RESTful ve modern API tasarımları, ölçeklenebilir sistemlerin temelini oluşturur...',
+'2026-04-02',1,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/api-1.jpg',
+NULL,0,NULL,0),
+
+-- 62 Eğitim
+(N'Kendi Kendine Öğrenme Disiplini Nasıl Kazanılır?',
+'/articleimages/52.jpeg',
+'https://img.blog.com/main/edu-5.jpg',
+'Bireysel öğrenme sürecinde süreklilik ve hedef belirleme büyük önem taşır...',
+'2026-04-04',14,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/edu-5.jpg',
+NULL,0,NULL,0),
+
+-- 63 Günlük Yaşam
+(N'Erken Uyanma Alışkanlığı Kazanmak',
+'/articleimages/53.jpg',
+'https://img.blog.com/main/life-5.jpg',
+'Erken uyanmak, gün planlamasını daha verimli yapabilmeyi sağlar...',
+'2026-04-06',6,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/life-5.jpg',
+NULL,0,NULL,0),
+
+-- 64 Spor
+(N'Kardiyo ve Ağırlık Antrenmanı Dengesi',
+'/articleimages/54.jpg',
+'https://img.blog.com/main/sport-5.jpg',
+'Sağlıklı bir antrenman programında kardiyo ve ağırlık dengesi önemlidir...',
+'2026-04-08',2,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/sport-5.jpg',
+NULL,0,NULL,0),
+
+-- 65 Finans
+(N'Pasif Gelir Kaynakları Nelerdir?',
+'/articleimages/55.jpg',
+'https://img.blog.com/main/finance-5.jpg',
+'Pasif gelir, uzun vadede finansal özgürlük sağlamanın önemli yollarından biridir...',
+'2026-04-10',5,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/finance-5.jpg',
+NULL,0,NULL,0),
+
+-- 66 Film & Dizi
+(N'Film Eleştirisi Yaparken Nelere Dikkat Edilmeli?',
+'/articleimages/56.jpg',
+'https://img.blog.com/main/movie-5.jpg',
+'Film eleştirisi yaparken kurgu, oyunculuk ve anlatım dili birlikte değerlendirilmelidir...',
+'2026-04-12',4,
+0,NULL,NULL,'e0a90858-5b28-462a-9240-ee53a2e6194d',
+NULL,0,0,NULL,'https://img.blog.com/300/movie-5.jpg',
+NULL,0,NULL,0),
+
+-- 67 Sanat
+(N'Sanat Tarihinde Rönesans Dönemi',
+'/articleimages/57.jpg',
+'https://img.blog.com/main/art-5.jpg',
+'Rönesans dönemi, sanat tarihinde büyük bir kırılma noktası olarak kabul edilir...',
+'2026-04-14',3,
+0,NULL,NULL,'1498f28c-abcb-4817-b795-dc7e483bdafe',
+NULL,0,0,NULL,'https://img.blog.com/300/art-5.jpg',
+NULL,0,NULL,0),
+
+-- 68 Yeme & İçme
+(N'Sağlıklı Smoothie Tarifleri',
+'/articleimages/58.webp',
+'https://img.blog.com/main/food-5.jpg',
+'Smoothie tarifleri, pratik ve besleyici öğün alternatifleri sunar...',
+'2026-04-16',8,
+0,NULL,NULL,'5d6ec374-4be6-40ee-b1be-d86f3bd20cd5',
+NULL,0,0,NULL,'https://img.blog.com/300/food-5.jpg',
+NULL,0,NULL,0),
+
+-- 69 Seyahat
+(N'Seyahatte Valiz Hazırlama Rehberi',
+'/articleimages/59.webp',
+'https://img.blog.com/main/travel-5.jpg',
+'Doğru valiz hazırlığı, seyahat konforunu doğrudan etkiler...',
+'2026-04-18',10,
+0,NULL,NULL,'422a57ea-9a0f-4e7c-a35e-133d84d6cda9',
+NULL,0,0,NULL,'https://img.blog.com/300/travel-5.jpg',
+NULL,0,NULL,0),
+
+-- 70 Sağlık
+(N'Günlük Su Tüketimi Ne Kadar Olmalı?',
+'/articleimages/60.jpg',
+'https://img.blog.com/main/health-5.jpg',
+'Yeterli su tüketimi, vücut fonksiyonlarının sağlıklı çalışması için gereklidir...',
+'2026-04-20',9,
+0,NULL,NULL,'f59ed505-5a9d-4521-b40d-d3e793f32a13',
+NULL,0,0,NULL,'https://img.blog.com/300/health-5.jpg',
+NULL,0,NULL,0);
