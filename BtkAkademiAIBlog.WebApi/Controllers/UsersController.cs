@@ -24,5 +24,14 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             var values = _userManager.Users.ToList();
             return Ok(values);
         }
+
+
+
+        [HttpGet("GetUserById")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            var values = await _userManager.FindByIdAsync(id);
+            return Ok(values);
+        }
     }
 }
