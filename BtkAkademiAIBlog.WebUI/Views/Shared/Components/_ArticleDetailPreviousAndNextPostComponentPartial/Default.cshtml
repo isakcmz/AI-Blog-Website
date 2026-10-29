@@ -1,5 +1,25 @@
 ﻿<div class="single-nav">
-    <div class="back-prev"> <a href="#"><i class="fa-solid fa-arrow-right"></i> Önceki Yazı <em>Mikroservis Mimarisi</em></a> </div>
 
-    <div class="back-next"><a href="#">Sonraki Yazı <i class="fa-solid fa-arrow-right"></i> <em> MongoDb'de Performans</em></a></div>
+    @if (ViewBag.previousPost != null)
+    {
+        <div class="back-prev">
+            <a href="/Article/ArticleDetail/@ViewBag.previousPost.ArticleId">
+                <i class="fa-solid fa-arrow-right"></i>
+                Önceki Yazı
+                <em>@ViewBag.previousPost.Title</em>
+            </a>
+        </div>
+    }
+
+    @if (ViewBag.nextPost != null)
+    {
+        <div class="back-next">
+            <a href="/Article/ArticleDetail/@ViewBag.nextPost.ArticleId">
+                Sonraki Yazı
+                <i class="fa-solid fa-arrow-right"></i>
+                <em>@ViewBag.nextPost.Title</em>
+            </a>
+        </div>
+    }
+
 </div>

@@ -24,7 +24,7 @@
 
                             @await Component.InvokeAsync("_ArticleDetailAuthorComponentPartial", new { id = ViewBag.i })
 
-                            @await Component.InvokeAsync("_ArticleDetailPreviousAndNextPostComponentPartial")
+                            @await Component.InvokeAsync("_ArticleDetailPreviousAndNextPostComponentPartial", new { id = ViewBag.i })
                             
                             @await Component.InvokeAsync("_ArticleDetailRelatedPostComponentPartial")
 

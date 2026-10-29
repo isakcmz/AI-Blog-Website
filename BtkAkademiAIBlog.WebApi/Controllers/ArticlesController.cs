@@ -347,7 +347,11 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             var values = _context.Articles
                 .Where(x => x.ArticleId > id)
                 .OrderBy(x => x.ArticleId)
-                .Select(x => x.Title)
+                .Select(x => new
+                {
+                    x.Title,
+                    x.ArticleId,
+                })
                 .FirstOrDefault();
 
             if (values == null)
@@ -366,7 +370,11 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             var values = _context.Articles
                 .Where(x => x.ArticleId < id)
                 .OrderByDescending(x => x.ArticleId)
-                .Select(x => x.Title)
+                .Select(x => new
+                {
+                    x.Title,
+                    x.ArticleId,
+                })
                 .FirstOrDefault();
 
             if (values == null)
