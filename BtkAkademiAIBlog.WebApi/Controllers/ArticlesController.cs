@@ -335,5 +335,48 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(values);
         }
 
+
+
+
+
+
+
+        [HttpGet("GetNextPost")]
+        public IActionResult GetNextPost(int id)
+        {
+            var values = _context.Articles
+                .Where(x => x.ArticleId > id)
+                .OrderBy(x => x.ArticleId)
+                .Select(x => x.Title)
+                .FirstOrDefault();
+
+            if (values == null)
+            {
+                return NotFound("Sonraki kayıt bulunamadı!");
+            }
+
+            return Ok(values);
+        }
+
+
+
+        [HttpGet("GetPreviousPost")]
+        public IActionResult GetPreviousPost(int id)
+        {
+            var values = _context.Articles
+                .Where(x => x.ArticleId < id)
+                .OrderByDescending(x => x.ArticleId)
+                .Select(x => x.Title)
+                .FirstOrDefault();
+
+            if (values == null)
+            {
+                return NotFound("Önceki kayıt bulunamadı!");
+            }
+
+            return Ok(values);
+        }
+
+
     }
 }
