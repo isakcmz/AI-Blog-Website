@@ -405,10 +405,13 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                 .Take(3)
                 .Select(z => new Result3ArticlesByCategoryIdDto
                 {
+                    ArticleId = z.ArticleId,
                     Title = z.Title,
                     CoverImageUrl = z.CoverImageUrl,
+                    AuthorId = z.AppUser.Id,
                     Name = z.AppUser.Name,
                     Surname = z.AppUser.Surname,
+                    UserImageUrl = z.AppUser.ImageUrl,
                     CreatedDate = z.CreatedDate
                 }).ToList();
 
