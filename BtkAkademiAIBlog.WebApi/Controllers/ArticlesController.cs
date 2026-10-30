@@ -386,5 +386,37 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
         }
 
 
+
+
+
+
+        [HttpGet("GetArticlesRelatedByCategory")]
+        public IActionResult GetArticlesRelatedByCategory(int id)
+        {
+            var categoryId = _context.Articles
+                .Where(x => x.ArticleId == id)
+                .Select(y => y.CategoryId)
+                .FirstOrDefault();
+
+            var values = _context.Articles
+                .Include(x => x.AppUser)
+                .Where(y => y.CategoryId == int.Parse(categoryId.ToString()))
+                .Skip(1)
+                .Take(3)
+                .Select(z => new Result3ArticlesByCategoryIdDto
+                {
+                    Title = z.Title,
+                    CoverImageUrl = z.CoverImageUrl,
+                    Name = z.AppUser.Name,
+                    Surname = z.AppUser.Surname,
+                    CreatedDate = z.CreatedDate
+                }).ToList();
+
+            return Ok(values);
+        }
+
+
+
+
     }
 }
