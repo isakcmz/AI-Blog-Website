@@ -89,5 +89,30 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             var dto = _mapper.Map<List<ResultCommentWithArticleAndAuthorDto>>(values);
             return Ok(dto);
         }
+
+
+
+
+
+        [HttpGet("GetCommentsWithUsersByArticleId")]
+        public IActionResult GetCommentsWithUsersByArticleId(int id)
+        {
+            var values = _context.Comments
+                .Where(x => x.ArticleId == id)
+                .Select(y => new ResultCommentWithUserDto
+                {
+                    AppUserId = y.AppUserId,
+                    CommentDate = y.CommentDate,
+                    CommentDetail = y.CommentDetail,
+                    CommentId = y.CommentId,
+                    Name = y.AppUser.Name,
+                    Surname = y.AppUser.Surname,
+                    UserImageUrl = y.AppUser.ImageUrl,
+                })
+                .ToList();
+
+            return Ok(values);
+        }
+
     }
 }
