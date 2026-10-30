@@ -289,7 +289,9 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
                     ArticleId = z.ArticleId,
                     Title = z.Title,
                     CategoryName = z.Category.CategoryName,
-                    Image300x300Url = z.Image300x300Url
+                    Image300x300Url = z.Image300x300Url,
+                    AuthorId = z.AppUser.Id,
+                    AuthorName = z.AppUser.Name + " " + z.AppUser.Surname
                 }).ToList();
 
             return Ok(values);

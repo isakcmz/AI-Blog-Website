@@ -1,54 +1,26 @@
-﻿<div class="back-title back-small-title pt-30">
+﻿@model List<ResultLast4ArticleWithCategoryDto>
+
+<div class="back-title back-small-title pt-30">
     <h2>Son Yazılar</h2>
 </div>
 <ul class="back-hero-bottom">
-    <li>
-        <div class="image-areas">
-            <a href="#"><img src="/images/LatestPost01.jpg" alt="image"></a>
-        </div>
-        <div class="back-btm-content">
-            <a href="#" class="back-cates">Teknoloji</a>
-            <h3><a href="#">Yapay Zekada Yeni LLM'ler'</a></h3>
-            <ul>
-                <li class="back-date"><a href="#">Atakan Kara</a></li>
-            </ul>
-        </div>
-    </li>
-    <li>
-        <div class="image-areas">
-            <a href="#"><img src="/images/LatestPost02.jpg" alt="image"></a>
-        </div>
-        <div class="back-btm-content">
-            <a href="#" class="back-cates">Müzik</a>
-            <h3><a href="#">Spotify Yıllık Özet</a></h3>
-            <ul>
-                <li class="back-date"><a href="#">Dilara Güzel </a></li>
-            </ul>
-        </div>
-    </li>
-    <li>
-        <div class="image-areas">
-            <a href="#"><img src="/images/LatestPost03.jpg" alt="image"></a>
-        </div>
-        <div class="back-btm-content">
-            <a href="#" class="back-cates">Günlük Yaşam</a>
-            <h3><a href="#">10 Adımda Zayıflama Önerileri</a></h3>
-            <ul>
-                <li class="back-date"><a href="#">Melis Işık</a></li>
-            </ul>
-        </div>
-    </li>
-    <li>
-        <div class="image-areas">
-            <a href="#"><img src="/images/LatestPost04.jpg" alt="image"></a>
-        </div>
-        <div class="back-btm-content">
-            <a href="#" class="back-cates">Seyehat</a>
-            <h3><a href="#">İtalya'nın Akdeniz Kıyısı: Sicilya</a></h3>
-            <ul>
-                <li class="back-date"><a href="#">Kenan Çakır </a></li>
-            </ul>
-        </div>
-    </li>
+    
+    @foreach(var item in Model)
+    {
+        <li>
+            <div class="image-areas">
+                <a href="/Article/ArticleDetail/@item.ArticleId"><img src="@item.Image300x300Url" alt="image"></a>
+            </div>
+            <div class="back-btm-content">
+                <a href="#" class="back-cates">@item.CategoryName</a>
+                <h3><a href="/Article/ArticleDetail/@item.ArticleId">@item.Title</a></h3>
+                <ul>
+                    <li class="back-date"><a href="/Author/AuthorDetail/@item.AuthorId">@item.AuthorName</a></li>
+                </ul>
+            </div>
+        </li>
+    }
+
 </ul>
+
 <div class="back-add pt-15"> <img src="/template/assets/images/whats/add.jpg" alt="add-image"> </div>

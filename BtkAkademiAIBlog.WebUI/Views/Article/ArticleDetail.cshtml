@@ -30,7 +30,7 @@
 
                             @await Component.InvokeAsync("_ArticleDetailCommentComponentPartial", new { id = ViewBag.i })
                             
-                            @await Component.InvokeAsync("_ArticleDetailAddCommentComponentPartial")
+                            @await Component.InvokeAsync("_ArticleDetailAddCommentComponentPartial", new { id = ViewBag.i })
 
                         </div>
                     </div>

@@ -18,7 +18,7 @@ namespace BtkAkademiAIBlog.WebUI.ViewComponents.ArticleDetailComponents
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7017/api/Comments/GetCommentsWithUsersByArticleId?id=8");
+            var responseMessage = await client.GetAsync($"https://localhost:7017/api/Comments/GetCommentsWithUsersByArticleId?id={id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
