@@ -1,0 +1,497 @@
+﻿@model MovieListPageViewModel
+@using System.Globalization
+@using System.Text.RegularExpressions
+
+@{
+    ViewData["Title"] = "MovieList";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+
+    
+    // Amazon poster linkindeki küçük boyutu istenen genişlikle değiştirir
+    string PosterUrl(string url, int width)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return "";
+        return Regex.Replace(url, @"_V1_.*?\.jpg", "_V1_UX" + width + ".jpg");
+    }
+
+    string FormatVotes(string votes)
+    {
+        return int.TryParse(votes, out var v) ? v.ToString("N0", new CultureInfo("tr-TR")) : votes;
+    }
+
+    // API IMDb ID vermediği için başlık + yıl ile IMDb araması açılır
+    string ImdbUrl(string title, string year)
+    {
+        return "https://www.imdb.com/find/?s=tt&q=" + Uri.EscapeDataString((title ?? "") + " " + (year ?? ""));
+    }
+
+    var firstRank = Model.Movies.Any() ? Model.Movies.Min(x => x.rank) : 0;
+    var lastRank = Model.Movies.Any() ? Model.Movies.Max(x => x.rank) : 0;
+}
+
+
+
+
+<style>
+    /* ===== Üst başlık ===== */
+    .mv-info-chip {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: #f5f7fb; color: #4b5563; font-size: 13px; font-weight: 600;
+        padding: 6px 12px; border-radius: 20px;
+    }
+    .mv-info-chip i { color: #2f6fed; }
+
+    /* ===== Tablo ===== */
+    .mv-table > :not(caption) > * > * { padding: 16px 14px; }
+    .mv-table thead th { white-space: nowrap; font-size: 13px; text-transform: uppercase; letter-spacing: .4px; color: #6b7280; }
+
+    .mv-rank {
+        display: inline-block; min-width: 40px; text-align: center;
+        background: #eef2ff; color: #4338ca; font-weight: 700;
+        padding: 6px 10px; border-radius: 8px;
+    }
+
+    .mv-poster {
+        width: 60px; height: 88px; object-fit: cover; border-radius: 8px;
+        background: #e5e7eb; display: block; cursor: zoom-in;
+        box-shadow: 0 2px 8px rgba(0,0,0,.2);
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .mv-poster:hover { transform: scale(1.06); box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+
+    .mv-title { font-weight: 700; font-size: 15px; color: #1f2937; line-height: 1.3; }
+    .mv-meta { font-size: 13px; color: #6b7280; margin-top: 2px; }
+    .mv-toggle { font-size: 13px; text-decoration: none; display: inline-block; margin-top: 4px; }
+
+    .mv-genre {
+        display: inline-block; background: #eef2ff; color: #4338ca;
+        font-weight: 600; font-size: 12px; padding: 4px 8px; border-radius: 6px;
+        margin: 2px 3px 2px 0; white-space: nowrap;
+    }
+
+    /* Puan sütunu */
+    .mv-rating-col { min-width: 110px; text-align: center; }
+    .mv-rating {
+        display: inline-block; background: #fff7e6; color: #b45309;
+        font-weight: 700; padding: 6px 12px; border-radius: 20px; white-space: nowrap;
+    }
+    .mv-rating.top { background: #e6f4ea; color: #137333; }
+    .mv-bar { width: 70px; height: 4px; background: #eceff4; border-radius: 4px; margin: 8px auto 0; overflow: hidden; }
+    .mv-bar span { display: block; height: 100%; background: #f5a623; border-radius: 4px; }
+    .mv-rating.top + .mv-bar span { background: #1e9e55; }
+
+    /* Oy sütunu */
+    .mv-votes-col { min-width: 120px; text-align: center; border-left: 1px dashed #e6e9f0; }
+    .mv-votes { font-weight: 700; color: #1f2937; }
+    .mv-votes-label { font-size: 12px; color: #9ca3af; }
+
+    /* Yönetmen / oyuncular */
+    .mv-people { min-width: 220px; }
+    .mv-director { font-weight: 600; color: #1f2937; }
+    .mv-cast { font-size: 13px; color: #6b7280; margin-top: 2px; line-height: 1.5; }
+
+    /* IMDb butonu */
+    .mv-imdb {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: #f5c518; color: #111; font-weight: 800; font-size: 13px;
+        padding: 6px 12px; border-radius: 8px; text-decoration: none; white-space: nowrap;
+        border: 1px solid #e0b200; transition: all .2s ease;
+    }
+    .mv-imdb:hover { background: #e3b50f; color: #000; }
+
+    .mv-overview td { background: #fafbff; color: #4b5563; font-size: 14px; line-height: 1.7; }
+    .mv-item:hover > tr:first-child > td { background: #f9fbff; }
+
+    /* ===== Lightbox ===== */
+    .mv-lightbox {
+        position: fixed; inset: 0; z-index: 99999;
+        background: rgba(10, 14, 25, .72);
+        -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+        display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .mv-lightbox.open { display: flex; animation: mvFade .2s ease; }
+    @@keyframes mvFade { from { opacity: 0; } to { opacity: 1; } }
+    @@keyframes mvPop { from { transform: scale(.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .mv-lb-card {
+        position: relative; background: #fff; border-radius: 18px; overflow: hidden;
+        display: flex; max-width: 860px; width: 100%; max-height: 90vh;
+        box-shadow: 0 25px 60px rgba(0,0,0,.45); animation: mvPop .22s ease;
+    }
+    .mv-lb-img { flex: 0 0 340px; background: #0f172a; display: flex; align-items: center; justify-content: center; }
+    .mv-lb-img img { width: 100%; height: 100%; object-fit: contain; max-height: 90vh; display: block; }
+    .mv-lb-body { padding: 28px; overflow-y: auto; flex: 1; }
+    .mv-lb-body h3 { font-weight: 800; margin: 0 0 4px 0; font-size: 24px; }
+    .mv-lb-sub { color: #6b7280; margin-bottom: 14px; }
+    .mv-lb-label { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: #9ca3af; margin-top: 16px; }
+    .mv-lb-text { color: #374151; line-height: 1.7; }
+    .mv-lb-close {
+        position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
+        border: none; background: rgba(255,255,255,.92); color: #111; font-size: 18px; line-height: 1;
+        cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.25); z-index: 2;
+    }
+    .mv-lb-close:hover { background: #fff; transform: scale(1.08); }
+
+    @@media (max-width: 700px) {
+        .mv-lb-card { flex-direction: column; }
+        .mv-lb-img { flex: 0 0 auto; max-height: 45vh; }
+        .mv-lb-img img { max-height: 45vh; }
+    }
+</style>
+
+<main class="page-content">
+
+    <!-- breadcrumb -->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">Film & Dizi</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="#"><i class="bx bx-home-alt"></i></a>
+                    </li>
+                    <li class="breadcrumb-item active">IMDB Top 1000</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+
+            <!-- Başlık + üst sayfa geçişi -->
+            <div class="d-flex align-items-center flex-wrap gap-3 mb-3">
+                <div>
+                    <h5 class="fw-bold mb-0">IMDB Top 1000 Film & Dizi</h5>
+                    <small class="text-muted">RapidAPI üzerinden canlı olarak getirilir</small>
+                </div>
+
+                <div class="ms-auto d-flex align-items-center gap-2">
+                    <a class="btn btn-outline-secondary btn-sm @(Model.CurrentPage == 1 ? "disabled" : "")"
+                       href="/Admin/MovieAdmin/MovieList?page=@(Model.CurrentPage - 1)">
+                        <i class="bi bi-chevron-left"></i> Önceki
+                    </a>
+                    <span class="fw-semibold px-2">Sayfa @Model.CurrentPage / @Model.TotalPages</span>
+                    <a class="btn btn-outline-secondary btn-sm @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")"
+                       href="/Admin/MovieAdmin/MovieList?page=@(Model.CurrentPage + 1)">
+                        Sonraki <i class="bi bi-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
+            }
+            else
+            {
+                <!-- Bilgi çipleri -->
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <span class="mv-info-chip"><i class="bi bi-trophy-fill"></i> Sıralama #@firstRank - #@lastRank</span>
+                    <span class="mv-info-chip"><i class="bi bi-film"></i> <span id="visibleCount">@Model.Movies.Count</span> film gösteriliyor</span>
+                </div>
+
+                <!-- Araç çubuğu -->
+                <div class="row g-2 align-items-center mb-3">
+                    <div class="col-12 col-md-4">
+                        <input type="text" id="movieSearch" class="form-control" placeholder="Film, yönetmen, oyuncu ara..." />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <select id="genreFilter" class="form-select">
+                            <option value="">Tüm türler</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <select id="sortSelect" class="form-select">
+                            <option value="rank:asc">Sıra: 1 → 100</option>
+                            <option value="rating:desc">Puan: yüksekten düşüğe</option>
+                            <option value="votes:desc">Oy: çoktan aza</option>
+                            <option value="year:desc">Yıl: yeniden eskiye</option>
+                            <option value="year:asc">Yıl: eskiden yeniye</option>
+                            <option value="title:asc">Ad: A → Z</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2 text-md-end">
+                        <button type="button" id="toggleAll" class="btn btn-outline-primary btn-sm">Tüm özetleri aç</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mv-table" id="movieTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Poster</th>
+                                <th>Film</th>
+                                <th>Tür</th>
+                                <th class="text-center">Puan</th>
+                                <th class="text-center">Oy</th>
+                                <th>Yönetmen & Oyuncular</th>
+                                <th>Bağlantı</th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var m in Model.Movies)
+                        {
+                            var runtimeMin = new string((m.Runtime ?? "").Where(char.IsDigit).ToArray());
+                            double.TryParse(m.IMDB_Rating, NumberStyles.Any, CultureInfo.InvariantCulture, out var ratingVal);
+                            var isTop = ratingVal >= 9.0;
+                            var pct = (ratingVal * 10).ToString("0", CultureInfo.InvariantCulture);
+                            var imdbUrl = ImdbUrl(m.Series_Title, m.Released_Year);
+
+                            <tbody class="mv-item"
+                                   data-rank="@m.rank"
+                                   data-title="@m.Series_Title"
+                                   data-year="@m.Released_Year"
+                                   data-rating="@m.IMDB_Rating"
+                                   data-votes="@m.No_of_Votes"
+                                   data-genre="@m.Genre"
+                                   data-runtime="@m.Runtime"
+                                   data-director="@m.Director"
+                                   data-cast="@m.Star1, @m.Star2, @m.Star3"
+                                   data-overview="@m.Overview"
+                                   data-large="@PosterUrl(m.Poster_Link, 700)"
+                                   data-imdb="@imdbUrl"
+                                   data-search="@($"{m.Series_Title} {m.Director} {m.Star1} {m.Star2} {m.Star3} {m.Genre}".ToLowerInvariant())">
+                                <tr>
+                                    <td><span class="mv-rank">@m.rank</span></td>
+
+                                    <td>
+                                        <img class="mv-poster" src="@PosterUrl(m.Poster_Link, 200)" alt="@m.Series_Title"
+                                             title="Büyütmek için tıkla"
+                                             referrerpolicy="no-referrer" loading="lazy"
+                                             onerror="this.removeAttribute('src');" />
+                                    </td>
+
+                                    <td style="min-width:200px;">
+                                        <div class="mv-title">@m.Series_Title</div>
+                                        <div class="mv-meta">@m.Released_Year &middot; @m.Runtime</div>
+                                        <a href="#" class="mv-toggle">Özeti göster</a>
+                                    </td>
+
+                                    <td style="min-width:150px;">
+                                        @foreach (var g in (m.Genre ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                                        {
+                                            <span class="mv-genre">@g</span>
+                                        }
+                                    </td>
+
+                                    <td class="mv-rating-col">
+                                        <span class="mv-rating @(isTop ? "top" : "")">★ @m.IMDB_Rating</span>
+                                        <div class="mv-bar"><span style="width:@(pct)%"></span></div>
+                                    </td>
+
+                                    <td class="mv-votes-col">
+                                        <div class="mv-votes">@FormatVotes(m.No_of_Votes)</div>
+                                        <div class="mv-votes-label">oy</div>
+                                    </td>
+
+                                    <td class="mv-people">
+                                        <div class="mv-director"><i class="bi bi-person-video2 me-1 text-muted"></i>@m.Director</div>
+                                        <div class="mv-cast">@m.Star1 &middot; @m.Star2 &middot; @m.Star3</div>
+                                    </td>
+
+                                    <td>
+                                        <a href="@imdbUrl" target="_blank" rel="noopener" class="mv-imdb">
+                                            IMDb <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="mv-overview" style="display:none;">
+                                    <td></td>
+                                    <td colspan="7">@m.Overview</td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                    <div id="noResult" class="text-center text-muted py-4" style="display:none;">
+                        Aramanıza uygun film bulunamadı.
+                    </div>
+                </div>
+
+                <!-- Alt sayfalama -->
+                <nav class="mt-3">
+                    <ul class="pagination justify-content-center flex-wrap mb-0">
+                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="/Admin/MovieAdmin/MovieList?page=@(Model.CurrentPage - 1)">&laquo; Önceki</a>
+                        </li>
+
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="/Admin/MovieAdmin/MovieList?page=@i">@i</a>
+                            </li>
+                        }
+
+                        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" href="/Admin/MovieAdmin/MovieList?page=@(Model.CurrentPage + 1)">Sonraki &raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+
+</main>
+
+<!-- Poster pop-up -->
+<div class="mv-lightbox" id="mvLightbox" aria-hidden="true">
+    <div class="mv-lb-card" role="dialog" aria-modal="true">
+        <button type="button" class="mv-lb-close" id="mvLbClose" aria-label="Kapat">&times;</button>
+        <div class="mv-lb-img"><img id="mvLbImg" src="" alt="" referrerpolicy="no-referrer" /></div>
+        <div class="mv-lb-body">
+            <h3 id="mvLbTitle"></h3>
+            <div class="mv-lb-sub" id="mvLbSub"></div>
+            <div>
+                <span class="mv-rating" id="mvLbRating"></span>
+                <span class="text-muted ms-2" id="mvLbVotes"></span>
+            </div>
+
+            <div class="mv-lb-label">Yönetmen</div>
+            <div class="mv-lb-text" id="mvLbDirector"></div>
+
+            <div class="mv-lb-label">Oyuncular</div>
+            <div class="mv-lb-text" id="mvLbCast"></div>
+
+            <div class="mv-lb-label">Özet</div>
+            <div class="mv-lb-text" id="mvLbOverview"></div>
+
+            <a href="#" target="_blank" rel="noopener" class="mv-imdb mt-4" id="mvLbImdb">
+                IMDb'de aç <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var table = document.getElementById('movieTable');
+        if (!table) return;
+
+        var items = Array.prototype.slice.call(table.querySelectorAll('tbody.mv-item'));
+        var searchBox = document.getElementById('movieSearch');
+        var genreSelect = document.getElementById('genreFilter');
+        var sortSelect = document.getElementById('sortSelect');
+        var toggleAllBtn = document.getElementById('toggleAll');
+        var noResult = document.getElementById('noResult');
+        var countEl = document.getElementById('visibleCount');
+
+        // ---- Tür listesi ----
+        var genres = {};
+        items.forEach(function (it) {
+            (it.dataset.genre || '').split(',').forEach(function (g) {
+                g = g.trim();
+                if (g) genres[g] = true;
+            });
+        });
+        Object.keys(genres).sort().forEach(function (g) {
+            var opt = document.createElement('option');
+            opt.value = g.toLowerCase();
+            opt.textContent = g;
+            genreSelect.appendChild(opt);
+        });
+
+        // ---- Arama + tür filtresi ----
+        function applyFilters() {
+            var q = searchBox.value.trim().toLowerCase();
+            var g = genreSelect.value;
+            var visible = 0;
+
+            items.forEach(function (it) {
+                var okSearch = !q || it.dataset.search.indexOf(q) > -1;
+                var genreList = ',' + (it.dataset.genre || '').toLowerCase().replace(/\s*,\s*/g, ',') + ',';
+                var okGenre = !g || genreList.indexOf(',' + g + ',') > -1;
+                var show = okSearch && okGenre;
+                it.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+
+            countEl.textContent = visible;
+            noResult.style.display = visible === 0 ? 'block' : 'none';
+        }
+        searchBox.addEventListener('input', applyFilters);
+        genreSelect.addEventListener('change', applyFilters);
+
+        // ---- Sıralama ----
+        sortSelect.addEventListener('change', function () {
+            var parts = sortSelect.value.split(':');
+            var key = parts[0];
+            var dir = parts[1] === 'desc' ? -1 : 1;
+
+            items.sort(function (a, b) {
+                var x = a.dataset[key] || '';
+                var y = b.dataset[key] || '';
+                if (key === 'title') return x.localeCompare(y, 'tr') * dir;
+                return (parseFloat(x || 0) - parseFloat(y || 0)) * dir;
+            });
+            items.forEach(function (it) { table.appendChild(it); });
+        });
+
+        // ---- Özet aç/kapa ----
+        function setOverview(item, open) {
+            item.querySelector('.mv-overview').style.display = open ? 'table-row' : 'none';
+            item.querySelector('.mv-toggle').textContent = open ? 'Özeti gizle' : 'Özeti göster';
+        }
+
+        var allOpen = false;
+        toggleAllBtn.addEventListener('click', function () {
+            allOpen = !allOpen;
+            items.forEach(function (it) { setOverview(it, allOpen); });
+            toggleAllBtn.textContent = allOpen ? 'Tüm özetleri kapat' : 'Tüm özetleri aç';
+        });
+
+        // ---- Lightbox ----
+        var lb = document.getElementById('mvLightbox');
+        document.body.appendChild(lb); // şablonun katmanlarından etkilenmesin diye body'ye taşı
+        var lbImg = document.getElementById('mvLbImg');
+
+        function openLightbox(item, thumbSrc) {
+            var d = item.dataset;
+            lbImg.onerror = function () { lbImg.onerror = null; lbImg.src = thumbSrc; };
+            lbImg.src = d.large || thumbSrc;
+            lbImg.alt = d.title;
+
+            document.getElementById('mvLbTitle').textContent = d.title;
+            document.getElementById('mvLbSub').textContent = d.year + ' \u00B7 ' + d.runtime + ' \u00B7 ' + d.genre;
+            document.getElementById('mvLbRating').textContent = '\u2605 ' + d.rating;
+            document.getElementById('mvLbVotes').textContent =
+                (parseInt(d.votes, 10) ? parseInt(d.votes, 10).toLocaleString('tr-TR') : d.votes) + ' oy';
+            document.getElementById('mvLbDirector').textContent = d.director;
+            document.getElementById('mvLbCast').textContent = d.cast;
+            document.getElementById('mvLbOverview').textContent = d.overview;
+            document.getElementById('mvLbImdb').href = d.imdb;
+
+            lb.classList.add('open');
+            lb.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lb.classList.remove('open');
+            lb.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // ---- Tablo tıklamaları (özet linki + poster) ----
+        table.addEventListener('click', function (e) {
+            var link = e.target.closest('.mv-toggle');
+            if (link) {
+                e.preventDefault();
+                var item = link.closest('tbody.mv-item');
+                var isOpen = item.querySelector('.mv-overview').style.display !== 'none';
+                setOverview(item, !isOpen);
+                return;
+            }
+
+            var poster = e.target.closest('.mv-poster');
+            if (poster) {
+                openLightbox(poster.closest('tbody.mv-item'), poster.getAttribute('src') || '');
+            }
+        });
+
+        lb.addEventListener('click', function (e) { if (e.target === lb) closeLightbox(); });
+        document.getElementById('mvLbClose').addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+    })();
+</script>
+
