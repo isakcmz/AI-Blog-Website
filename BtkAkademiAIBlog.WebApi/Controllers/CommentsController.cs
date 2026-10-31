@@ -114,5 +114,30 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(values);
         }
 
+
+
+
+
+        [HttpGet("GetLast3CommentsWithUser")]
+        public IActionResult GetLast3CommentsWithUser()
+        {
+            var values = _context.Comments
+                .OrderByDescending(o => o.CommentId)
+                .Take(3)
+                .Include(x => x.AppUser)
+                .Select(y => new GetLast3CommentWithUserDto
+                {
+                    CommentDate = y.CommentDate,
+                    CommentDetail = y.CommentDetail,
+                    AppUserId = y.AppUserId,
+                    Name = y.AppUser.Name,
+                    Surname = y.AppUser.Surname,
+                    UserImageUrl = y.AppUser.ImageUrl,
+                    ArticleId = y.ArticleId,
+                }).ToList();
+
+            return Ok(values);
+        }
+
     }
 }
