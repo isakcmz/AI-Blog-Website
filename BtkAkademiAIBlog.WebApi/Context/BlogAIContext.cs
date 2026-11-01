@@ -19,6 +19,7 @@ namespace BtkAkademiAIBlog.WebApi.Context
         public DbSet<TradingVideo> TradingVideos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<SliderCarousel> SliderCarousels { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
     }
