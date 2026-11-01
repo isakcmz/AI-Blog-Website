@@ -76,5 +76,20 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
 
 
+
+
+
+        [HttpGet("GetUnreadMessageList")]
+        public IActionResult GetUnreadMessageList()
+        {
+            var values = _context.Messages
+                .Where(x => x.IsRead == false)
+                .ToList();
+
+            return Ok(values);
+        }
+
+
+
     }
 }
