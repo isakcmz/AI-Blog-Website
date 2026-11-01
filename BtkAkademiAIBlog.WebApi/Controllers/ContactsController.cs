@@ -73,5 +73,14 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
             return Ok(value);
         }
 
+
+
+        [HttpGet("GetFirstContact")]
+        public IActionResult GetFirstContact()
+        {
+            var value = _context.Contacts.FirstOrDefault();
+            return Ok(value);
+        }
+
     }
 }
