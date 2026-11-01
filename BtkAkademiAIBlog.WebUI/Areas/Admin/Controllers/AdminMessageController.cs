@@ -30,5 +30,26 @@ namespace BtkAkademiAIBlog.WebUI.Areas.Admin.Controllers
 
             return View();
         }
+
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> MarkAsRead(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.PutAsync($"https://localhost:7017/api/Messages/MarkAsRead/{id}", null);
+            return response.IsSuccessStatusCode ? Ok() : StatusCode(500);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> MarkAllAsRead()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.PutAsync("https://localhost:7017/api/Messages/MarkAllAsRead", null);
+            return response.IsSuccessStatusCode ? Ok() : StatusCode(500);
+        }
     }
 }

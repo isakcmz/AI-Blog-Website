@@ -91,5 +91,37 @@ namespace BtkAkademiAIBlog.WebApi.Controllers
 
 
 
+
+
+
+
+
+        [HttpPut("MarkAsRead/{id}")]
+        public IActionResult MarkAsRead(int id)
+        {
+            var value = _context.Messages.Find(id);
+            if (value == null)
+                return NotFound();
+
+            value.IsRead = true;
+            _context.SaveChanges();
+            return Ok("Mesaj okundu olarak işaretlendi");
+        }
+
+
+        [HttpPut("MarkAllAsRead")]
+        public IActionResult MarkAllAsRead()
+        {
+            var values = _context.Messages.Where(x => !x.IsRead).ToList();
+            foreach (var item in values)
+            {
+                item.IsRead = true;
+            }
+            _context.SaveChanges();
+            return Ok("Tüm mesajlar okundu olarak işaretlendi");
+        }
+
+
+
     }
 }

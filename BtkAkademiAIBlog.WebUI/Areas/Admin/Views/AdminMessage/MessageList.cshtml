@@ -550,7 +550,7 @@
         function updateDeleteButton() {
             const checkedCount = document.querySelectorAll('.message-checkbox:checked').length;
             deleteSelectedBtn.disabled = checkedCount === 0;
-            deleteSelectedBtn.innerHTML = checkedCount > 0 
+            deleteSelectedBtn.innerHTML = checkedCount > 0
                 ? `<i class="bi bi-trash me-2"></i>Seçilenleri Sil (${checkedCount})`
                 : '<i class="bi bi-trash me-2"></i>Seçilenleri Sil';
         }
@@ -599,7 +599,7 @@
         // Filter Functionality
         const statusFilter = document.getElementById('statusFilter');
         const aiStatusFilter = document.getElementById('aiStatusFilter');
-        
+
         function applyFilters() {
             const statusValue = statusFilter.value;
             const rows = document.querySelectorAll('.message-row');
@@ -624,135 +624,146 @@
         statusFilter.addEventListener('change', applyFilters);
         aiStatusFilter.addEventListener('change', applyFilters);
 
-        // View Message Modal
+        // ===== Modal =====
         let currentMessageId = null;
         const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
 
+        // Navbar'daki kırmızı sayıyı günceller
+        function updateNavbarBadge() {
+            const badge = document.querySelector('.notify-badge');
+            if (!badge) return;
+            const unread = document.querySelectorAll('.message-row[data-read="false"]').length;
+            if (unread === 0) {
+                badge.remove();
+            } else {
+                badge.textContent = unread > 9 ? '9+' : unread;
+            }
+        }
+
+        // Mesajı okundu yapar (API'ye istek atar, satırı günceller)
+        async function markAsRead(messageId) {
+            const row = document.querySelector(`.message-row[data-message-id="${messageId}"]`);
+            if (!row || row.dataset.read === 'true') return;
+
+            const response = await fetch(`/Admin/AdminMessage/MarkAsRead/${messageId}`, { method: 'POST' });
+
+            if (response.ok) {
+                row.dataset.read = 'true';
+                row.classList.remove('table-active', 'fw-semibold');
+                row.querySelector('.badge.bg-danger')?.remove();
+                row.querySelector('.bi-star-fill')?.remove();
+                updateNavbarBadge();
+            }
+        }
+
+        // Satırdaki verilerle modalı doldurup açar
+        function openMessageModal(row) {
+            const name = row.dataset.name;
+            const surname = row.dataset.surname;
+            const initials = `${name?.charAt(0) || ''}${surname?.charAt(0) || ''}`.toUpperCase();
+
+            currentMessageId = row.dataset.messageId;
+
+            document.getElementById('modalAvatar').textContent = initials;
+            document.getElementById('modalName').textContent = `${name} ${surname}`;
+            document.getElementById('modalEmail').textContent = row.dataset.email;
+            document.getElementById('modalSubject').textContent = row.dataset.subject;
+            document.getElementById('modalMessage').textContent = row.dataset.message;
+            document.getElementById('modalDate').textContent = row.dataset.date;
+            document.getElementById('modalAIStatus').textContent = row.dataset.aiStatus;
+
+            messageModal.show();
+            markAsRead(currentMessageId);
+        }
+
+        // Göz butonu
         document.querySelectorAll('.view-message-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const row = this.closest('.message-row');
-                currentMessageId = row.dataset.messageId;
-                
-                // Get data from row
-                const name = row.dataset.name;
-                const surname = row.dataset.surname;
-                const email = row.dataset.email;
-                const subject = row.dataset.subject;
-                const message = row.dataset.message;
-                const date = row.dataset.date;
-                const aiStatus = row.dataset.aiStatus;
-                
-                // Get initials for avatar
-                const initials = `${name?.charAt(0) || ''}${surname?.charAt(0) || ''}`.toUpperCase();
-                
-                // Fill modal
-                document.getElementById('modalAvatar').textContent = initials;
-                document.getElementById('modalName').textContent = `${name} ${surname}`;
-                document.getElementById('modalEmail').textContent = email;
-                document.getElementById('modalSubject').textContent = subject;
-                document.getElementById('modalMessage').textContent = message;
-                document.getElementById('modalDate').textContent = date;
-                document.getElementById('modalAIStatus').textContent = aiStatus;
-                
-                // Show modal
-                messageModal.show();
+                openMessageModal(this.closest('.message-row'));
             });
         });
 
-        // Modal Mark as Read
+        // Satıra tıklama
+        document.querySelectorAll('.message-row').forEach(row => {
+            row.addEventListener('click', function(e) {
+                if (!e.target.closest('.form-check') && !e.target.closest('.btn-group')) {
+                    openMessageModal(this);
+                }
+            });
+        });
+
+        // Modal: Okundu İşaretle
         document.getElementById('modalMarkReadBtn').addEventListener('click', function() {
-            if(currentMessageId) {
-                // Ajax call here
-                console.log('Mark as read from modal:', currentMessageId);
+            if (currentMessageId) {
+                markAsRead(currentMessageId);
                 messageModal.hide();
             }
         });
 
-        // Modal Delete
+        // Modal: Sil
         document.getElementById('modalDeleteBtn').addEventListener('click', function() {
-            if(currentMessageId && confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
+            if (currentMessageId && confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
                 // Ajax call here
                 console.log('Delete from modal:', currentMessageId);
                 messageModal.hide();
             }
         });
 
-        // Mark as Read
+        // Satırdaki yeşil tik butonu
         document.querySelectorAll('.mark-read-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const messageId = this.dataset.id;
-                // Ajax call here
-                console.log('Mark as read:', messageId);
+                markAsRead(this.dataset.id);
             });
         });
 
-        // Delete Message
+        // Satırdaki sil butonu
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const messageId = this.dataset.id;
-                if(confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
+                if (confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
                     // Ajax call here
                     console.log('Delete:', messageId);
                 }
             });
         });
 
-        // Mark All as Read
-        document.getElementById('markAllReadBtn').addEventListener('click', function() {
-            if(confirm('Tüm mesajlar okundu olarak işaretlensin mi?')) {
-                // Ajax call here
-                console.log('Mark all as read');
+        // Tümünü Okundu İşaretle
+        document.getElementById('markAllReadBtn').addEventListener('click', async function() {
+            if (confirm('Tüm mesajlar okundu olarak işaretlensin mi?')) {
+                const response = await fetch('/Admin/AdminMessage/MarkAllAsRead', { method: 'POST' });
+                if (response.ok) {
+                    location.reload();
+                }
             }
         });
 
-        // Delete Selected
+        // Seçilenleri Sil
         deleteSelectedBtn.addEventListener('click', function() {
             const selected = Array.from(document.querySelectorAll('.message-checkbox:checked'))
                 .map(cb => cb.value);
-            
-            if(confirm(`Seçilen ${selected.length} mesaj silinecek. Emin misiniz?`)) {
+
+            if (confirm(`Seçilen ${selected.length} mesaj silinecek. Emin misiniz?`)) {
                 // Ajax call here
                 console.log('Delete selected:', selected);
             }
         });
 
-        // Row Click to View
-        document.querySelectorAll('.message-row').forEach(row => {
-            row.addEventListener('click', function(e) {
-                if (!e.target.closest('.form-check') && !e.target.closest('.btn-group')) {
-                    const messageId = this.dataset.messageId;
-                    
-                    // Get data from row
-                    const name = this.dataset.name;
-                    const surname = this.dataset.surname;
-                    const email = this.dataset.email;
-                    const subject = this.dataset.subject;
-                    const message = this.dataset.message;
-                    const date = this.dataset.date;
-                    const aiStatus = this.dataset.aiStatus;
-                    
-                    // Get initials for avatar
-                    const initials = `${name?.charAt(0) || ''}${surname?.charAt(0) || ''}`.toUpperCase();
-                    
-                    // Fill modal
-                    document.getElementById('modalAvatar').textContent = initials;
-                    document.getElementById('modalName').textContent = `${name} ${surname}`;
-                    document.getElementById('modalEmail').textContent = email;
-                    document.getElementById('modalSubject').textContent = subject;
-                    document.getElementById('modalMessage').textContent = message;
-                    document.getElementById('modalDate').textContent = date;
-                    document.getElementById('modalAIStatus').textContent = aiStatus;
-                    
-                    currentMessageId = messageId;
-                    
-                    // Show modal
-                    messageModal.show();
-                }
-            });
-        });
+        // Navbar'dan gelen mesajı otomatik aç
+        const urlParams = new URLSearchParams(window.location.search);
+        const openId = urlParams.get('openId');
+
+        if (openId) {
+            const targetRow = document.querySelector(`.message-row[data-message-id="${openId}"]`);
+            if (targetRow) {
+                openMessageModal(targetRow);
+
+                // URL'yi temizle ki sayfa yenilenince modal tekrar açılmasın
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
     });
 </script>
 
