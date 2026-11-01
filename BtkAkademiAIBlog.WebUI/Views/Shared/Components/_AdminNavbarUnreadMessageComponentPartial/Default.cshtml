@@ -3,43 +3,105 @@
 
 <li class="nav-item dropdown dropdown-large">
     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
-        <div class="messages">
-            <span class="notify-badge">@Model.Count</span>
-            <i class="bi bi-messenger"></i>
+        <div class="messages position-relative">
+            @if(Model.Count > 0)
+            {
+                <span class="notify-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    @(Model.Count > 9 ? "9+" : Model.Count.ToString())
+                </span>
+            }
+            <i class="bi bi-messenger fs-5"></i>
         </div>
     </a>
-    <div class="dropdown-menu dropdown-menu-end p-0">
-        <div class="p-2 border-bottom m-2">
-            <h5 class="h5 mb-0">Son Mesajlar</h5>
+    <div class="dropdown-menu dropdown-menu-end p-0" style="min-width: 360px;">
+        <div class="p-3 border-bottom bg-light">
+            <h5 class="h6 mb-0 fw-bold">Son Mesajlar</h5>
         </div>
-        <div class="header-message-list p-2">
-            <div class="dropdown-item bg-light radius-10 mb-1">
-                <form class="dropdown-searchbar position-relative">
-                    <div class="position-absolute top-50 start-0 translate-middle-y px-3 search-icon"><i class="bi bi-search"></i></div>
-                    <input class="form-control" type="search" placeholder="Search Messages">
-                </form>
+        <div class="header-message-list p-2" style="max-height: 400px; overflow-y: auto;">
+            <div class="dropdown-item bg-white border rounded-3 mb-2 p-2">
+                <div class="position-relative">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                    <input class="form-control ps-5 border-0 bg-light" type="search" placeholder="Mesaj Ara...">
+                </div>
             </div>
-
-            @foreach(var item in Model)
-            {
-                <a class="dropdown-item" href="#">
-                    <div class="d-flex align-items-center">
-                        <img src="assets/images/avatars/avatar-1.png" alt="" class="rounded-circle" width="52" height="52">
-                        <div class="ms-3 flex-grow-1">
-                            <h6 class="mb-0 dropdown-msg-user">@item.Name @item.Surname <span class="msg-time float-end text-secondary">@item.SendDate.ToString("dd/MMM : HH:mm")</span></h6>
-                            <small class="mb-0 dropdown-msg-text text-secondary d-flex align-items-center">@item.MessageDetail</small>
-                        </div>
-                    </div>
-                </a>
-            }
             
+            @if(Model.Any())
+            {
+                @foreach(var item in Model)
+                {
+                    var initials = $"{item.Name?.FirstOrDefault()}{item.Surname?.FirstOrDefault()}".ToUpper();
+                    var colors = new[] { "primary", "success", "info", "warning", "danger", "purple", "pink" };
+                    var colorIndex = (item.Name?.Length ?? 0 + item.Surname?.Length ?? 0) % colors.Length;
+                    var bgColor = colors[colorIndex];
 
+                    <a class="dropdown-item rounded-3 mb-1 p-2 hover-bg-light" href="/Admin/AdminMessage/MessageDetail/@item.MessageId">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="avatar-circle bg-@bgColor bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" 
+                                     style="width: 48px; height: 48px; font-size: 18px;">
+                                    @initials
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-semibold text-dark">@item.Name @item.Surname</h6>
+                                    <small class="text-muted">@item.SendDate.ToString("dd MMM : HH.mm")</small>
+                                </div>
+                                <p class="mb-0 text-muted small text-truncate" style="max-width: 250px;">
+                                    @item.MessageDetail
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <i class="bi bi-inbox fs-1 text-muted"></i>
+                    <p class="text-muted mt-2">Henüz mesaj yok</p>
+                </div>
+            }
         </div>
-        <div class="p-2">
-            <div><hr class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/Admin/AdminMessage/MessageList/">
-                <div class="text-center">Tüm Mesajları Gör</div>
+        <div class="p-2 border-top">
+            <a class="dropdown-item text-center rounded-3 py-2 text-primary fw-semibold" href="/Admin/AdminMessage/MessageList/">
+                <i class="bi bi-envelope-open me-2"></i>Tüm Mesajları Gör
             </a>
         </div>
     </div>
 </li>
+
+<style>
+    .dropdown-item.hover-bg-light:hover {
+        background-color: #f8f9fa !important;
+        transition: all 0.2s ease;
+    }
+    
+    .avatar-circle {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .notify-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        min-width: 18px;
+    }
+    
+    .header-message-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .header-message-list::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .header-message-list::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+    
+    .header-message-list::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
