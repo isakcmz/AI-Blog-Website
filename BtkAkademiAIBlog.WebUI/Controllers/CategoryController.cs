@@ -1,5 +1,6 @@
 ﻿using BtkAkademiAIBlog.WebUI.Dtos.CategoryDtos;
 using BtkAkademiAIBlog.WebUI.Dtos.TradingVideoDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -20,7 +21,7 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
 
-
+        [Authorize]
         public async Task<IActionResult> CategoryList()
         {
             var client = _httpClientFactory.CreateClient();
