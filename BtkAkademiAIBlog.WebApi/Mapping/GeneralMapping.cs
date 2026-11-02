@@ -15,6 +15,7 @@ namespace BtkAkademiAIBlog.WebApi.Mapping
         {
             CreateMap<Article, ResultArticleWithCategoryDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.AppUser.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.AppUser.Name))
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.AppUser.Surname))
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.AppUser.ImageUrl));

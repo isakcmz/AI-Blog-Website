@@ -16,6 +16,7 @@
         public string FeatureSliderImageUrl { get; set; }
         public string FeatureImageUrl { get; set; }
 
+        public string AuthorId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string ImageUrl { get; set; }
