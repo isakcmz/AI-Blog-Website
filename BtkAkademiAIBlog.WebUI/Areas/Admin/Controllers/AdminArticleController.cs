@@ -7,8 +7,9 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BtkAkademiAIBlog.WebUI.Controllers
+namespace BtkAkademiAIBlog.WebUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class AdminArticleController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
