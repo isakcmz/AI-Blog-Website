@@ -1,25 +1,15 @@
 using BtkAkademiAIBlog.WebApi.Context;
 using BtkAkademiAIBlog.WebApi.Entities;
+using BtkAkademiAIBlog.WebApi.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<BlogAIContext>();
-builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<BlogAIContext>();
+builder.Services.AddApplicationServices();
+builder.Services.AddAuthServices();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/api/Logins";
-        options.AccessDeniedPath = "/api/logins";
-        options.SlidingExpiration = true;
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    });
-
-builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
