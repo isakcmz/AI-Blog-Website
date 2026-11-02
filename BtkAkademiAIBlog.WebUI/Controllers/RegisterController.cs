@@ -21,14 +21,14 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
         [HttpGet]
-        public IActionResult UserLogin()
+        public IActionResult UserRegister()
         {
             return View();
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> UserLogin(UserRegisterDto userRegisterDto)
+        public async Task<IActionResult> UserRegister(UserRegisterDto userRegisterDto)
         {
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(userRegisterDto);

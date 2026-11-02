@@ -21,7 +21,6 @@ namespace BtkAkademiAIBlog.WebUI.Controllers
 
 
 
-        [Authorize]
         public async Task<IActionResult> CategoryList()
         {
             var client = _httpClientFactory.CreateClient();
