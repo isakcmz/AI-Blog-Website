@@ -13,6 +13,7 @@ builder.Services.AddHttpClient("groq", c =>
     c.BaseAddress = new Uri("https://api.groq.com/openai/");
 });
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -25,6 +26,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+app.UseStatusCodePagesWithReExecute("/ErrorPages/Page404");
+
 
 app.MapHub<ChatHub>("/chathub");
 
